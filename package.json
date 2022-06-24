@@ -1,0 +1,20 @@
+{
+  "name": "charrue-layout",
+  "version": "0.0.1",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "build:v2": "pnpm run build --filter=@charrue/layout",
+    "build:v3": "pnpm run build --filter=@charrue/layout-next"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.18.5",
+    "@babel/eslint-parser": "^7.18.2",
+    "eslint": "^8.18.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-vue": "^9.1.1",
+    "prettier": "^2.7.1"
+  }
+}
