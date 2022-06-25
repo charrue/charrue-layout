@@ -2,17 +2,11 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: var(--charrue-header-height, $default-header-height);
+  height: var(--charrue-header-height, $charrue-header-height);
   overflow: hidden;
   position: relative;
-  background: var(
-    --layout-header-content-bg-color,
-    --layout-aside-content-bg-color
-  );
-  color: var(
-    --layout-header-normal-text-color,
-    --layout-aside-normal-text-color
-  );
+  background-color: var(--charrue-header-bg-color, $charrue-header-bg-color);
+  color: var(--charrue-header-text-color, $charrue-header-text-color);
   box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
 
   &.fixed-header {
@@ -42,10 +36,9 @@
     .charrue-layout-trigger {
       display: flex;
       align-items: center;
-      line-height: var(--charrue-header-height, $default-header-height);
+      height: var(--charrue-header-height, $charrue-header-height);
+      line-height: var(--charrue-header-height, $charrue-header-height);
       padding: 0 16px;
-      height: 100%;
-      // float: left;
       cursor: pointer;
       transition: background 0.3s;
       -webkit-tap-highlight-color: transparent;
@@ -68,6 +61,6 @@
 }
 
 .fixed-header + .charrue-layout-content-main {
-  margin-top: var(--charrue-header-height, $default-header-height);
+  margin-top: var(--charrue-header-height, $charrue-header-height);
 }
 

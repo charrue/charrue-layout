@@ -212,11 +212,12 @@ export default defineComponent({
   --layout-aside-active-submenu-bg-color: #ebf1f6;
 }
 :root {
-  --layout-aside-content-bg-color: #2c3643;
-  --layout-aside-active-text-color: #e6a54e;
-  --layout-aside-active-bg-color: #222a34;
-  --layout-aside-normal-text-color: #41b883;
-  --layout-aside-hover-bg-color: #c16394;
-  --layout-aside-active-submenu-bg-color: #2a2d2e;
+  --charrue-sidebar-bg-color: #2c3643;
+  --charrue-sidebar-hover-bg-color: #c16394;
+  --charrue-sidebar-hover-bg-color: #e6a54e;
+  --charrue-sidebar-active-bg-color: #222a34;
+  --charrue-sidebar-text-color: #41b883;
+  --charrue-sidebar-active-text-color: #fff;
+  --charrue-sidebar-submenu-active-bg-color: #2a2d2e;
 }
 </style>
