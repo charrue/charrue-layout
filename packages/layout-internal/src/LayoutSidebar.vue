@@ -1,11 +1,11 @@
 <template>
-  <div class="charrue-layout-sidebar-container">
-    <div class="charrue-layout-sidebar-placeholder" :style="{ width }"></div>
+  <div class="charrue-sidebar-root">
+    <div class="charrue-sidebar-placeholder" :style="{ width }"></div>
     <div
-      class="charrue-layout-sidebar charrue-layout-sidebar-el-menu-container"
+      class="charrue-sidebar-inner"
       :style="{ width, position: absolute ? 'absolute' : 'fixed' }"
     >
-      <div v-if="logo || title" class="logo-container">
+      <div v-if="logo || title" class="charrue-logo-container">
         <router-link :to="homeUrl" class="menu-router-link">
           <img v-if="logo" :src="logo" alt="logo" />
           <h1 v-if="title">{{ title }}</h1>
@@ -13,7 +13,7 @@
       </div>
       <slot name="sidebar-top"></slot>
       <el-menu
-        class="charrue-layout-sidebar-el-menu"
+        class="charrue-sidebar-menu-root"
         mode="vertical"
         unique-opened
         :collapse="collapsed"

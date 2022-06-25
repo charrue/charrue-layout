@@ -29,6 +29,7 @@ jobs:
       - run: pnpm install
       - run: pnpm run build:v2
       - run: pnpm run build:v3
+      - run: pnpm run build:style
 
       - run: pnpm publish --access=public --filter=@charrue/layout
       - run: pnpm publish --access=public --filter=@charrue/layout-next

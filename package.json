@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build:v2": "pnpm run build --filter=@charrue/layout",
-    "build:v3": "pnpm run build --filter=@charrue/layout-next"
+    "build:v3": "pnpm run build --filter=@charrue/layout-next",
+    "build:style": "gulp --gulpfile ./scripts/build-style.js && node ./scripts/copy-style.js"
   },
   "license": "MIT",
   "devDependencies": {
@@ -15,6 +16,11 @@
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-vue": "^9.1.1",
+    "gulp": "^4.0.2",
+    "gulp-autoprefixer": "^8.0.0",
+    "gulp-clean-css": "^4.3.0",
+    "gulp-cssmin": "^0.2.0",
+    "gulp-dart-sass": "^1.0.2",
     "prettier": "^2.7.1"
   }
 }

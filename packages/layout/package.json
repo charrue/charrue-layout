@@ -1,6 +1,6 @@
 {
   "name": "@charrue/layout",
-  "version": "0.4.2",
+  "version": "0.5.0",
   "description": "基于vue2与element-ui, 解决中后台布局的问题，提供自动生成菜单与定制页面布局, 提供自动生成菜单与定制页面布局",
   "keywords": [
     "layout",

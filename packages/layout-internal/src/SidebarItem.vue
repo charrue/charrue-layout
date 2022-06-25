@@ -1,5 +1,5 @@
 <template>
-  <div class="charrue-layout-sidebar-el-menu-container">
+  <div class="charrue-sidebar-menu-children">
     <component
       :is="subMenuComponent"
       v-if="menuItem.children && menuItem.children.length > 0"
@@ -8,14 +8,14 @@
     >
       <template #title>
         <div
-          class="submenu-title"
-          :class="[menuItem.icon ? 'submenu-title-with-icon' : '']"
+          class="charrue-submenu-title"
+          :class="[menuItem.icon ? 'charrue-submenu-title-with-icon' : '']"
         >
           <i
             class="charrue-sidebar-menu-icon"
             :class="[prefixIconClass, menuItem.icon]"
           ></i>
-          <span class="charrue-sidebar-menu-text" :class="[menuTextClass]">{{
+          <span class="charrue-sidebar-menu-title" :class="[menuTextClass]">{{
             menuItem.title
           }}</span>
         </div>
@@ -31,14 +31,18 @@
       />
     </component>
     <template v-else>
-      <router-link v-if="route" :to="menuItem.path" class="menu-router-link">
+      <router-link
+        v-if="route"
+        :to="menuItem.path"
+        class="charrue-menu-router-link"
+      >
         <el-menu-item :index="menuItem.path">
           <i
             class="charrue-sidebar-menu-icon"
             :class="[prefixIconClass, menuItem.icon]"
           ></i>
           <template #title>
-            <span class="charrue-sidebar-menu-text" :class="[menuTextClass]">{{
+            <span class="charrue-sidebar-menu-title" :class="[menuTextClass]">{{
               menuItem.title
             }}</span>
           </template>
@@ -50,7 +54,7 @@
           :class="[prefixIconClass, menuItem.icon]"
         ></i>
         <template #title>
-          <span class="charrue-sidebar-menu-text" :class="[menuTextClass]">{{
+          <span class="charrue-sidebar-menu-title" :class="[menuTextClass]">{{
             menuItem.title
           }}</span>
         </template>

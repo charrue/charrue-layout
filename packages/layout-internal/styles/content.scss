@@ -1,0 +1,16 @@
+.charrue-content {
+  height: calc(100vh - var(--charrue-header-height, $default-header-height));
+  width: 100%;
+  position: relative;
+  margin-top: var(--charrue-header-height, $default-header-height);
+  overflow: auto;
+  box-sizing: border-box;
+
+  &-header,
+  &-footer {
+    flex: 0 0 auto;
+  }
+  &-body {
+    flex: 1;
+  }
+}

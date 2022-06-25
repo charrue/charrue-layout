@@ -1,8 +1,8 @@
 <template>
-  <div class="hamburger-container" @click="toggleClick">
+  <div class="charrue-layout-trigger" @click="toggleClick">
     <svg
       :class="{ 'is-active': isActive }"
-      class="hamburger-svg"
+      class="charrue-layout-default-trigger"
       viewBox="0 0 1024 1024"
       xmlns="http://www.w3.org/2000/svg"
       width="64"

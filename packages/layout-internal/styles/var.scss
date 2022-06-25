@@ -1,0 +1,40 @@
+$default-header-height: 50px;
+$default-normal-text-color: #a6adb4;
+$default-active-text-color: #fff;
+$default-normal-aside-bg-color: #001529;
+$default-active-aside-bg-color: #1890ff;
+$default-active-submenu-bg-color: #000c17;
+
+@mixin common-menu-text-color {
+  color: var(--layout-aside-normal-text-color, $default-normal-text-color);
+  --el-menu-text-color: var(--layout-aside-normal-text-color,$default-normal-text-color);
+}
+@mixin common-menu-text-bg {
+  background-color: var(--layout-aside-content-bg-color,$default-normal-aside-bg-color);
+  --el-menu-bg-color: var(--layout-aside-content-bg-color,$default-normal-aside-bg-color);
+}
+
+@mixin hover-menu-text-color {
+  color: var(--layout-aside-hover-text-color,var(--layout-aside-active-text-color, $default-active-text-color));
+}
+@mixin hover-menu-text-bg {
+  background-color: var(--layout-aside-hover-bg-color,var(--layout-aside-active-bg-color, $default-active-aside-bg-color));
+  --el-menu-active-color: var(--layout-aside-hover-bg-color,var(--layout-aside-active-bg-color, $default-active-aside-bg-color));
+}
+
+@mixin active-menu-text-color {
+  color: var(--layout-aside-active-text-color, $default-active-text-color);
+}
+@mixin active-menu-text-bg {
+  background-color: var(
+    --layout-aside-active-bg-color,
+    $default-active-aside-bg-color
+  );
+}
+
+@mixin active-submenu-text-color {
+  background-color: var(
+    --layout-aside-active-submenu-bg-color,
+    $default-active-submenu-bg-color
+  );
+}

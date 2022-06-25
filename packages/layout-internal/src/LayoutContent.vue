@@ -1,9 +1,9 @@
 <template>
-  <section class="charrue-layout-content-container">
-    <div class="charrue-layout-content-header">
+  <section class="charrue-content">
+    <div class="charrue-content-header">
       <slot name="content-header"></slot>
     </div>
-    <div class="charrue-layout-content-main">
+    <div class="charrue-content-body">
       <template v-if="animation">
         <transition name="fade-transform" mode="out-in">
           <slot name="content"></slot>
@@ -13,7 +13,7 @@
         <slot name="content"></slot>
       </template>
     </div>
-    <div class="charrue-layout-content-footer">
+    <div class="charrue-content-footer">
       <slot name="content-footer"></slot>
     </div>
   </section>

@@ -1,7 +1,9 @@
 <template>
   <div
     class="charrue-layout"
-    :class="[collapsed ? 'hideSidebar' : 'openSidebar']"
+    :class="[
+      collapsed ? 'charrue-layout--collapsed' : 'charrue-layout--opened',
+    ]"
   >
     <layout-sidebar
       :collapsed="innerCollapse"
@@ -23,19 +25,19 @@
       </template>
     </layout-sidebar>
 
-    <div class="charrue-layout-main" :style="mainWidthStyle">
+    <div class="charrue-layout-body" :style="mainWidthStyle">
       <div
-        class="charrue-layout-header-container"
+        class="charrue-header"
         :class="{ 'fixed-header': fixedHeader }"
         :style="headerWidthStyle"
       >
-        <div class="charrue-layout-header-main">
-          <div class="charrue-layout-header-left">
+        <div class="charrue-header-inner">
+          <div class="charrue-header-left">
             <slot name="header-left">
               <hamburger @toggle-click="toggleSideBar" />
             </slot>
           </div>
-          <div class="charrue-layout-header-right">
+          <div class="charrue-header-right">
             <slot name="header-right"></slot>
           </div>
         </div>
