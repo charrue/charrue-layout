@@ -1,6 +1,7 @@
 ![](https://raw.githubusercontent.com/ckangwen/image-host/main/images/charrue-layout.svg)
 
 ## charrue-layout
+[![OSCS Status](https://www.oscs1024.com/platform/badge/charrue/charrue-layout.svg?size=small)](https://www.oscs1024.com/project/charrue/charrue-layout?ref=badge_small)
 
 Charrue Layout是一组基于Element UI(Vue2)和Element Plus(Vue3)封装的组件。
 
