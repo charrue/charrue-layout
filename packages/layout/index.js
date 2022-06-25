@@ -1,4 +1,6 @@
-import Plugins, { Layout as _Layout } from "@charrue/layout-internal";
+import LayoutPlugin, {
+  Layout as LayoutComponent,
+} from "@charrue/layout-internal";
 
-export const Layout = _Layout;
-export default Plugins;
+export const Layout = LayoutComponent;
+export default LayoutPlugin;
