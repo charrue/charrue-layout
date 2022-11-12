@@ -1,6 +1,6 @@
 {
   "name": "@charrue/layout-next",
-  "version": "0.6.0",
+  "version": "1.0.0-alpha.0",
   "description": "基于vue3与element-plus解决中后台布局的问题, 提供自动生成菜单与定制页面布局",
   "keywords": [
     "layout",
@@ -14,24 +14,22 @@
     "directory": "packages/layout-next"
   },
   "license": "MIT",
-  "main": "dist/index.js",
-  "jsdelivr": "dist/index.js",
-  "unpkg": "dist/index.js",
-  "module": "dist/index.mjs",
+  "main": "src/index.ts",
   "files": [
     "dist",
     "README.md"
   ],
   "scripts": {
-    "build": "vue3-bundler"
+    "build": "tsup && npm run build:full",
+    "build:full": "tsup --config=tsup.full.config.ts"
   },
-  "devDependencies": {
-    "@charrue/layout-internal": "workspace:*",
-    "@charrue/vue3-bundler": "^0.0.6",
-    "vue": "3.2.25"
+  "dependencies": {
+    "element-plus": "^2.2.18",
+    "path-to-regexp": "^6.2.0",
+    "vue": "^3.2.41",
+    "vue-router": "^4.1.6"
   },
-  "peerDependencies": {
-    "element-plus": "*",
-    "vue": "3"
+  "publishConfig": {
+    "access": "public"
   }
 }
