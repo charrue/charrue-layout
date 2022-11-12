@@ -1,9 +1,7 @@
 <template>
   <div
     class="charrue-layout"
-    :class="[
-      collapsed ? 'charrue-layout--collapsed' : 'charrue-layout--opened',
-    ]"
+    :class="[collapsed ? 'charrue-layout--collapsed' : 'charrue-layout--opened']"
   >
     <layout-sidebar
       :collapsed="innerCollapse"
@@ -125,17 +123,13 @@ export default {
   computed: {
     mainWidthStyle() {
       return {
-        width: `calc(100% - ${
-          this.collapsed ? this.sidebarWidth[0] : this.sidebarWidth[1]
-        }px)`,
+        width: `calc(100% - ${this.collapsed ? this.sidebarWidth[0] : this.sidebarWidth[1]}px)`,
       };
     },
     headerWidthStyle() {
       let width = "100%";
       if (this.fixedHeader) {
-        width = `calc(100% - ${
-          this.collapsed ? this.sidebarWidth[0] : this.sidebarWidth[1]
-        }px)`;
+        width = `calc(100% - ${this.collapsed ? this.sidebarWidth[0] : this.sidebarWidth[1]}px)`;
       }
 
       return {

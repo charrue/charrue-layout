@@ -33,12 +33,7 @@
 </template>
 
 <script>
-import {
-  urlToList,
-  menuDataFormatter,
-  getMenuDataPathMapping,
-  isFunction,
-} from "./utils";
+import { urlToList, menuDataFormatter, getMenuDataPathMapping, isFunction } from "./utils";
 import { pathToRegexp } from "path-to-regexp";
 import SidebarItem from "./SidebarItem.vue";
 
@@ -103,9 +98,7 @@ export default {
   },
   computed: {
     width() {
-      return this.collapsed
-        ? `${this.sidebarWidth[0]}px`
-        : `${this.sidebarWidth[1]}px`;
+      return this.collapsed ? `${this.sidebarWidth[0]}px` : `${this.sidebarWidth[1]}px`;
     },
     computedMenuData() {
       const menuData = [];
@@ -140,9 +133,7 @@ export default {
         "$route.path",
         (currentRoute) => {
           const matchedRegex = this.regexToPath
-            ? Object.keys(this.regexToPath).find((reg) =>
-                pathToRegexp(reg).test(currentRoute)
-              )
+            ? Object.keys(this.regexToPath).find((reg) => pathToRegexp(reg).test(currentRoute))
             : null;
 
           if (matchedRegex) {
@@ -153,8 +144,7 @@ export default {
 
           // 菜单栏展开项包括当前url，以及由当前url所解析出来的父级url
           const openKeys = urlToList(this.activeRoutePath);
-          const currentRouteMenuData =
-            this.menuDataPathMapping[this.activeRoutePath];
+          const currentRouteMenuData = this.menuDataPathMapping[this.activeRoutePath];
           if (currentRouteMenuData && currentRouteMenuData.parentPath) {
             // 查找到当前菜单项的父级，将父级的path segments添加到openKeys中
             urlToList(currentRouteMenuData.parentPath).forEach((path) => {
@@ -167,7 +157,7 @@ export default {
         },
         {
           immediate: true,
-        }
+        },
       );
     }
   },
@@ -204,9 +194,7 @@ export default {
       if (Array.isArray(menuCopy.children) && menuCopy.children.length > 0) {
         menuCopy.children = menuCopy.children
           .map((child) => {
-            const currentPath = path.startsWith("/")
-              ? child.path
-              : `${path}/${child.path}`;
+            const currentPath = path.startsWith("/") ? child.path : `${path}/${child.path}`;
             return this._formatMenuData({
               menu: child,
               deep: deep + 1,
@@ -234,9 +222,7 @@ export default {
       if (Array.isArray(menuCopy.children) && menuCopy.children.length > 0) {
         menuCopy.children = menuCopy.children
           .map((child) => {
-            const currentPath = path.startsWith("/")
-              ? child.path
-              : `${path}/${child.path}`;
+            const currentPath = path.startsWith("/") ? child.path : `${path}/${child.path}`;
             return this.formatMenuData({
               menu: child,
               deep: deep + 1,
