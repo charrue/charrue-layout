@@ -1,20 +1,16 @@
 <template>
   <div class="example-container" :class="[`theme-${theme}`]">
     <charrue-layout
-      :collapsed="collapsed"
-      :data="menuData"
+      :collapse="collapsed"
+      :source="menuData"
       title="Vue3 Admin"
       logo="https://seeklogo.com/images/E/element-ui-logo-A640D7E503-seeklogo.com.png"
-      :regex-to-path="regexToPath"
-      @update:collapsed="(val) => (collapsed = val)"
+      :active-menu-rules="regexToPath"
+      @update:collapse="(val) => (collapsed = val)"
     >
       <template #sidebar-top>
         <div class="side-top-title">主题切换</div>
-        <el-radio-group
-          v-model="theme"
-          class="radio-container"
-          @change="onThemeChange"
-        >
+        <el-radio-group v-model="theme" class="radio-container" @change="onThemeChange">
           <el-radio label="normal">normal</el-radio>
           <el-radio label="light">light</el-radio>
           <el-radio label="dark">dark</el-radio>
@@ -43,6 +39,7 @@
 
 <script>
 import { defineComponent, ref } from "vue";
+
 const TOTAL_MENUS = [
   {
     title: "page",
@@ -53,7 +50,6 @@ const TOTAL_MENUS = [
         path: "page1",
         title: "page1",
         icon: "iconfont c-desktop",
-        redirect: "/page/page1/page5",
         children: [
           {
             path: "page4",
@@ -80,8 +76,8 @@ const TOTAL_MENUS = [
     ],
   },
   {
-    title: "schema-table",
-    path: "/schema-table",
+    title: "Page6",
+    path: "/page6",
     icon: "iconfont c-mobile",
   },
 ];

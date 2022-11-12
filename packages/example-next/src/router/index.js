@@ -9,6 +9,7 @@ const routes = [
   },
   {
     path: "/page",
+    name: "pageRoot",
     component: PageLayout,
     children: [
       {
@@ -43,6 +44,11 @@ const routes = [
         path: "page3-plus",
         name: "page3-plus",
         component: () => import("../views/page/page3-plus.vue"),
+      },
+      {
+        path: "page6",
+        name: "page6",
+        component: () => import("../views/page/page6.vue"),
       },
     ],
   },

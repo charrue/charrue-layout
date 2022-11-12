@@ -12,13 +12,13 @@ export default {
   name: "PageFive",
   data() {
     return {
-      authValue: "user"
-    }
+      authValue: "user",
+    };
   },
   methods: {
     onAuthChange(val) {
-      this.$store.commit("SET_AUTH", val)
-    }
-  }
+      this.$store.commit("SET_AUTH", val);
+    },
+  },
 };
 </script>

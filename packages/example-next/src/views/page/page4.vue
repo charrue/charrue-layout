@@ -1,13 +1,13 @@
 <template>
-  <div style="position: relative;">
-    <layout
-      :data="menuData"
+  <div style="position: relative">
+    <charrue-layout
+      v-model:collapse="collapsed"
+      :source="menuData"
       :route="false"
       :fixed-header="false"
       :absolute="true"
-      :collapsed.sync="collapsed"
       :aside-widths="[60, 300]"
-    ></layout>
+    ></charrue-layout>
   </div>
 </template>
 
