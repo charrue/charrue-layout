@@ -8,7 +8,7 @@ import { LayoutMenuItem, ActiveMenuRulesType } from "./types";
 const Layout = defineComponent({
   name: "CharrueLayout",
   props: {
-    source: {
+    data: {
       type: Array as PropType<LayoutMenuItem[]>,
       default() {
         return [];
@@ -101,7 +101,7 @@ const Layout = defineComponent({
   },
   render() {
     const {
-      source,
+      data,
       fixedHeader,
 
       innerCollapse,
@@ -126,7 +126,7 @@ const Layout = defineComponent({
           LayoutSidebar,
           {
             collapse: innerCollapse,
-            source,
+            data,
             collapseWidth,
           },
           {

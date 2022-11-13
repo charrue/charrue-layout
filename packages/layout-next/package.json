@@ -14,7 +14,10 @@
     "directory": "packages/layout-next"
   },
   "license": "MIT",
-  "main": "src/index.ts",
+  "main": "dist/index.mjs",
+  "unpkg": "dist/index.global.js",
+  "module": "dist/index.mjs",
+  "typings": "dist/index.d.ts",
   "files": [
     "dist",
     "README.md"

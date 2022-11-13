@@ -9,7 +9,7 @@ import { LayoutMenuItem } from "./types";
 const LayoutSidebar = defineComponent({
   name: "CharrueLayoutSidebar",
   props: {
-    source: {
+    data: {
       type: Array as PropType<LayoutMenuItem[]>,
       default() {
         return [];
@@ -26,7 +26,7 @@ const LayoutSidebar = defineComponent({
   setup(props) {
     const context = useProvider();
     const { computedMenuData, activeRoutePath, openKeys } = useLayoutMenuData(
-      props.source,
+      props.data,
       context.activeMenuRules,
     );
 
