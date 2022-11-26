@@ -1,9 +1,9 @@
 import { ref, computed, defineComponent, h, PropType, watch, reactive } from "vue";
-import { createProvider } from "./hooks/useLayoutContext";
+import { createProvider } from "./helper/context";
 import LayoutSidebar from "./Sidebar";
 import LayoutHeader from "./Header";
 import LayoutContent from "./Content";
-import { LayoutMenuItem, ActiveMenuRulesType } from "./types";
+import { LayoutMenuItem, ActiveMenuRulesType } from "./helper/types";
 
 const Layout = defineComponent({
   name: "CharrueLayout",

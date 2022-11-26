@@ -1,7 +1,7 @@
 import { inject, provide } from "vue";
-import { ActiveMenuRulesType } from "../types";
+import { ActiveMenuRulesType } from "./types";
 
-const LayoutKey = "__charrue_layout_context_key__";
+export const LayoutKey = "__charrue_layout_context_key__";
 
 interface LayoutContext {
   absolute: boolean;
@@ -18,10 +18,11 @@ const defaultValue: LayoutContext = {
   homeRoute: "/",
   activeMenuRules: {},
 };
+
 export const createProvider = (context: LayoutContext) => {
   provide(LayoutKey, context);
 };
 
-export const useProvider = () => {
+export const useLayoutContext = () => {
   return inject(LayoutKey, defaultValue);
 };

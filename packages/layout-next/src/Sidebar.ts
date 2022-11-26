@@ -1,10 +1,10 @@
 import { defineComponent, h, PropType } from "vue";
 import { RouterLink } from "vue-router";
 import { ElMenu } from "element-plus";
-import { useProvider } from "./hooks/useLayoutContext";
 import SidebarItem from "./SidebarItem";
-import { useLayoutMenuData } from "./hooks/useLayoutMenuData";
-import { LayoutMenuItem } from "./types";
+import { useLayoutMenuData } from "./helper/useLayoutMenuData";
+import { useLayoutContext } from "./helper/context";
+import { LayoutMenuItem } from "./helper/types";
 
 const LayoutSidebar = defineComponent({
   name: "CharrueLayoutSidebar",
@@ -24,10 +24,10 @@ const LayoutSidebar = defineComponent({
     },
   },
   setup(props) {
-    const context = useProvider();
+    const context = useLayoutContext();
     const { computedMenuData, activeRoutePath, openKeys } = useLayoutMenuData(
       props.data,
-      context.activeMenuRules,
+      context?.activeMenuRules,
     );
 
     return {

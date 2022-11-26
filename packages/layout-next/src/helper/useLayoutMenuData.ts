@@ -1,13 +1,17 @@
+/* eslint-disable max-statements */
 import { computed, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { pathToRegexp } from "path-to-regexp";
-import { cleanPath, urlToList, warn } from "../utils";
-import { LayoutMenuItem, LayoutMenuItemVO, ActiveMenuRulesType } from "../types";
+import { cleanPath, urlToList, warn } from "./utils";
+import { LayoutMenuItem, LayoutMenuItemVO, ActiveMenuRulesType } from "./types";
 
-export const useLayoutMenuData = (data: LayoutMenuItem[], activeMenuRules: ActiveMenuRulesType) => {
+export const useLayoutMenuData = (
+  data: LayoutMenuItem[] = [],
+  activeMenuRules: ActiveMenuRulesType = {},
+) => {
   const router = useRouter();
   const allRoutes = router.getRoutes();
-  const namePathMapping = allRoutes.reduce((acc, cur) => {
+  const globalRouteNamePathMapping = allRoutes.reduce((acc, cur) => {
     const routeName = String(cur.name) || "";
     acc[routeName] = cur.path;
     acc[cur.path] = routeName;
@@ -23,7 +27,7 @@ export const useLayoutMenuData = (data: LayoutMenuItem[], activeMenuRules: Activ
     }
 
     if (path && !name) {
-      const routeName = namePathMapping[path];
+      const routeName = globalRouteNamePathMapping[path];
       if (!routeName) {
         warn(`route path: ${path} not found.`);
       }
@@ -34,7 +38,7 @@ export const useLayoutMenuData = (data: LayoutMenuItem[], activeMenuRules: Activ
     }
 
     if (!path && name) {
-      const routePath = namePathMapping[name];
+      const routePath = globalRouteNamePathMapping[name];
       if (!routePath) {
         warn(`route name: ${name} not found.`);
       }
@@ -50,7 +54,7 @@ export const useLayoutMenuData = (data: LayoutMenuItem[], activeMenuRules: Activ
     };
   };
 
-  const pathToMenu = ref<Record<string, LayoutMenuItemVO>>({});
+  const navPathToMenuConfig = ref<Record<string, LayoutMenuItemVO>>({});
   const formatMenuData = (
     menuData: LayoutMenuItem,
     parent?: LayoutMenuItemVO,
@@ -78,7 +82,7 @@ export const useLayoutMenuData = (data: LayoutMenuItem[], activeMenuRules: Activ
       : [];
 
     if (path && name) {
-      pathToMenu.value[path] = menu;
+      navPathToMenuConfig.value[path] = menu;
     }
     return menu;
   };
@@ -92,35 +96,30 @@ export const useLayoutMenuData = (data: LayoutMenuItem[], activeMenuRules: Activ
   const route = useRoute();
   const activeRoutePath = ref("");
   const openKeys = ref<string[]>([]);
+  const activeMenuRuleKeys = computed(() => Object.keys(activeMenuRules));
 
   watch(
     () => route.path,
     (currentRoutePath: string) => {
-      const matchedRouteReg = Object.keys(activeMenuRules).find((reg) => {
-        const targetRoute = activeMenuRules[reg];
-        if (typeof targetRoute === "string") {
-          return pathToRegexp(reg).test(targetRoute);
-        }
-        if (typeof targetRoute.name === "string") {
-          return pathToRegexp(reg).test(namePathMapping[targetRoute.name]);
-        }
-        return false;
+      const activeMenuRuleKey = activeMenuRuleKeys.value.find((reg) => {
+        return pathToRegexp(reg).test(currentRoutePath);
       });
 
-      let activeRoute = currentRoutePath;
-      if (matchedRouteReg) {
-        const matchedRoute = activeMenuRules[matchedRouteReg];
+      let activeMenuKey = currentRoutePath;
+      if (activeMenuRuleKey) {
+        const matchedRoute = activeMenuRules[activeMenuRuleKey];
         if (typeof matchedRoute === "string") {
-          activeRoute = matchedRoute;
+          activeMenuKey = matchedRoute;
         } else if (typeof matchedRoute.name === "string") {
-          activeRoute = namePathMapping[matchedRoute.name];
+          activeMenuKey = globalRouteNamePathMapping[matchedRoute.name];
         }
       }
 
       let activeUrlSegments: string[] = [];
-      const currentRouteMenu = pathToMenu.value[activeRoute];
-      if (currentRouteMenu) {
-        const { pathStack } = currentRouteMenu;
+      const activeMenuConfig = navPathToMenuConfig.value[activeMenuKey];
+
+      if (activeMenuConfig) {
+        const { pathStack } = activeMenuConfig;
         pathStack.forEach((itemPath) => {
           activeUrlSegments = activeUrlSegments.concat(urlToList(itemPath));
         });
@@ -128,7 +127,7 @@ export const useLayoutMenuData = (data: LayoutMenuItem[], activeMenuRules: Activ
         activeUrlSegments = urlToList(currentRoutePath);
       }
 
-      activeRoutePath.value = activeRoute;
+      activeRoutePath.value = activeMenuKey;
       openKeys.value = activeUrlSegments;
     },
     {
@@ -138,7 +137,7 @@ export const useLayoutMenuData = (data: LayoutMenuItem[], activeMenuRules: Activ
 
   return {
     computedMenuData,
-    pathToMenu,
+    navPathToMenuConfig,
     activeRoutePath,
     openKeys,
   };

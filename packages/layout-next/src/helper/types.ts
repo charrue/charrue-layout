@@ -1,12 +1,6 @@
 export interface LayoutMenuItem {
   title: string;
-  /**
-   * route path
-   */
   path?: string;
-  /**
-   * route name
-   */
   name?: string;
   icon?: string;
   children?: LayoutMenuItem[];

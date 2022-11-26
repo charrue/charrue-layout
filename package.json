@@ -4,8 +4,9 @@
   "private": true,
   "main": "index.js",
   "scripts": {
-    "build:v2": "pnpm --filter=@charrue/layout run build",
-    "build:v3": "pnpm --filter=@charrue/layout-next run build",
+    "build:v2": "pnpm --filter=@charrue/layout run build && pnpm run build:style",
+    "build:v3": "pnpm --filter=@charrue/layout-next run build && pnpm run build:style",
+    "start:v3": "pnpm --filter=example-next run dev",
     "build:style": "gulp --gulpfile ./scripts/build-style.js && node ./scripts/copy-style.js"
   },
   "license": "MIT",

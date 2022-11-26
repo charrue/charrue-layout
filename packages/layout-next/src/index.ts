@@ -1,12 +1,11 @@
-import { Plugin } from "vue";
-import Layout from "./Layout";
+import CharrueLayout from "./Layout";
 
-const plugin: Plugin = {
-  install(app) {
-    app.component("CharrueLayout", Layout);
+const plugin = {
+  install(app: any) {
+    app.component("CharrueLayout", CharrueLayout);
   },
 };
 
-export { Layout };
-export * from "./types";
+export { CharrueLayout };
+export * from "./helper/types";
 export default plugin;
