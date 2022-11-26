@@ -8,4 +8,5 @@ const plugin = {
 
 export { CharrueLayout };
 export * from "./helper/types";
+export * from "./helper/public";
 export default plugin;
