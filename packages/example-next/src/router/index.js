@@ -15,7 +15,6 @@ const routes = [
       {
         path: "page1",
         name: "page1",
-        redirect: "/page/page1/page4",
         component: () => import("../views/page/page-container.vue"),
         children: [
           {

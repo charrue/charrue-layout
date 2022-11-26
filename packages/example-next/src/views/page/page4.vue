@@ -1,13 +1,6 @@
 <template>
   <div style="position: relative">
-    <charrue-layout
-      v-model:collapse="collapsed"
-      :source="menuData"
-      :route="false"
-      :fixed-header="false"
-      :absolute="true"
-      :aside-widths="[60, 300]"
-    ></charrue-layout>
+    <charrue-layout v-model:collapse="collapsed" :data="menuData" :absolute="true"></charrue-layout>
   </div>
 </template>
 
@@ -19,11 +12,11 @@ export default {
       collapsed: false,
       menuData: [
         {
-          path: "标题1",
+          path: "/foo",
           title: "标题1",
         },
         {
-          path: "标题2",
+          path: "/bar",
           title: "标题2",
         },
       ],

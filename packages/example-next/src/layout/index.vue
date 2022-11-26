@@ -2,7 +2,7 @@
   <div class="example-container" :class="[`theme-${theme}`]">
     <charrue-layout
       :collapse="collapsed"
-      :source="menuData"
+      :data="menuData"
       title="Vue3 Admin"
       logo="https://seeklogo.com/images/E/element-ui-logo-A640D7E503-seeklogo.com.png"
       :active-menu-rules="regexToPath"
@@ -37,50 +37,52 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { defineComponent, ref } from "vue";
+import { defineLayoutConfig } from "@charrue/layout-next"
 
-const TOTAL_MENUS = [
+const TOTAL_MENUS = defineLayoutConfig([
   {
-    title: "page",
+    title: "PAGE",
     path: "/page",
     icon: "iconfont c-mobile",
     children: [
       {
         path: "page1",
-        title: "page1",
+        title: "#PAGE1",
         icon: "iconfont c-desktop",
         children: [
           {
+            title: "#PAGE4",
             path: "page4",
-            title: "page4",
             icon: "iconfont c-button",
           },
           {
+            title: "#PAGE5",
             path: "page5",
-            title: "page5",
             icon: "iconfont c-cell",
           },
         ],
       },
       {
+        title: "#PAGE2",
         path: "page2",
-        title: "page2",
         icon: "iconfont c-empty",
       },
       {
+        title: "#PAGE3",
         path: "page3",
-        title: "page3",
         icon: "el-icon-document",
       },
     ],
   },
   {
-    title: "Page6",
-    path: "/page6",
+    title: "#PAGE6",
+    path: "/page/page6",
     icon: "iconfont c-mobile",
   },
-];
+]);
+
 export default defineComponent({
   name: "PageLayout",
   setup() {
@@ -108,7 +110,8 @@ export default defineComponent({
     };
 
     const regexToPath = ref({
-      "/page/page3(.*)": "/page/page3",
+      // "/page/page3(.*)": "/page/page3",
+      "/page/page3-plus": "/page/page3",
     });
 
     return {
@@ -196,7 +199,7 @@ export default defineComponent({
 </style>
 
 <style>
-.theme-light {
+:root {
   --layout-aside-content-bg-color: #ebf1f6;
   --layout-aside-active-text-color: #2f9afd;
   --layout-aside-active-bg-color: #f5f8fb;
@@ -206,14 +209,5 @@ export default defineComponent({
   --layout-aside-hover-bg-color: #f5f8fb;
 
   --layout-aside-active-submenu-bg-color: #ebf1f6;
-}
-:root {
-  --charrue-sidebar-bg-color: #2c3643;
-  --charrue-sidebar-hover-bg-color: #c16394;
-  --charrue-sidebar-hover-bg-color: #e6a54e;
-  --charrue-sidebar-active-bg-color: #222a34;
-  --charrue-sidebar-text-color: #41b883;
-  --charrue-sidebar-active-text-color: #fff;
-  --charrue-sidebar-submenu-active-bg-color: #2a2d2e;
 }
 </style>
