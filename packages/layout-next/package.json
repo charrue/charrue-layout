@@ -1,6 +1,6 @@
 {
   "name": "@charrue/layout-next",
-  "version": "1.0.0-alpha.0",
+  "version": "1.0.0-alpha.1",
   "description": "基于vue3与element-plus解决中后台布局的问题, 提供自动生成菜单与定制页面布局",
   "keywords": [
     "layout",
