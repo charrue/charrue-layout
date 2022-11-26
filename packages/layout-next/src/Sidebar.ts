@@ -41,111 +41,89 @@ const LayoutSidebar = defineComponent({
       type: Object,
     },
   },
-  setup(props) {
+  setup(props, { slots }) {
     const { computedMenuData, activeRoutePath, openKeys } = useLayoutMenuData(
       props.data,
       props.activeMenuRules,
     );
 
-    return {
-      activeRoutePath,
-      openKeys,
-      computedMenuData,
-    };
-  },
-  render() {
-    const {
-      collapse,
-      collapseWidth,
-
-      absolute,
-      homeRoute,
-      logo,
-      title,
-
-      activeRoutePath,
-      openKeys,
-      computedMenuData,
-
-      $slots,
-    } = this;
-
-    return h(
-      "div",
-      {
-        class: "charrue-sidebar-root",
-      },
-      [
-        h("div", {
-          class: "charrue-sidebar-placeholder",
-          style: {
-            width: `${collapseWidth}px`,
-          },
-        }),
-        h(
-          "div",
-          {
-            class: "charrue-sidebar-inner",
+    return () =>
+      h(
+        "div",
+        {
+          class: "charrue-sidebar-root",
+        },
+        [
+          h("div", {
+            class: "charrue-sidebar-placeholder",
             style: {
-              width: `${collapseWidth}px`,
-              position: absolute ? "absolute" : "fixed",
+              width: `${props.collapseWidth}px`,
             },
-          },
-          [
-            (logo || title) &&
+          }),
+          h(
+            "div",
+            {
+              class: "charrue-sidebar-inner",
+              style: {
+                width: `${props.collapseWidth}px`,
+                position: props.absolute ? "absolute" : "fixed",
+              },
+            },
+            [
+              (props.logo || props.title) &&
+                h(
+                  "div",
+                  {
+                    class: "charrue-logo-container",
+                  },
+                  [
+                    h(
+                      RouterLink,
+                      {
+                        class: "menu-router-link",
+                        to: props.homeRoute,
+                      },
+                      {
+                        default: () => [
+                          props.logo &&
+                            h("img", {
+                              src: props.logo,
+                            }),
+                          props.title && h("h1", {}, props.title),
+                        ],
+                      },
+                    ),
+                  ],
+                ),
+
+              slots.sidebarTop ? slots.sidebarTop() : null,
+
               h(
-                "div",
+                ElMenu,
                 {
-                  class: "charrue-logo-container",
+                  class: "charrue-sidebar-menu-root",
+                  mode: "vertical",
+                  uniqueOpened: true,
+                  collapse: props.collapse,
+                  defaultActive: activeRoutePath.value,
+                  defaultOpeneds: openKeys.value,
                 },
-                [
-                  h(
-                    RouterLink,
-                    {
-                      class: "menu-router-link",
-                      to: homeRoute,
-                    },
-                    {
-                      default: () => [
-                        logo &&
-                          h("img", {
-                            src: logo,
-                          }),
-                        title && h("h1", {}, title),
-                      ],
-                    },
-                  ),
-                ],
+                {
+                  default: () =>
+                    computedMenuData.value.map((item, index) => {
+                      return h(SidebarItem, {
+                        key: `${item.path}-${index}`,
+                        menuItem: item,
+                      });
+                    }),
+                },
               ),
 
-            $slots.sidebarTop ? $slots.sidebarTop() : null,
-
-            h(
-              ElMenu,
-              {
-                class: "charrue-sidebar-menu-root",
-                mode: "vertical",
-                uniqueOpened: true,
-                collapse,
-                defaultActive: activeRoutePath,
-                defaultOpeneds: openKeys,
-              },
-              {
-                default: () =>
-                  computedMenuData.map((item, index) => {
-                    return h(SidebarItem, {
-                      key: `${item.path}-${index}`,
-                      menuItem: item,
-                    });
-                  }),
-              },
-            ),
-
-            $slots.sidebarBottom ? $slots.sidebarBottom() : null,
-          ],
-        ),
-      ],
-    );
+              slots.sidebarBottom ? slots.sidebarBottom() : null,
+            ],
+          ),
+        ],
+      );
   },
 });
 
