@@ -1,5 +1,4 @@
-import { ref, computed, defineComponent, h, PropType, watch, reactive } from "vue";
-import { createProvider } from "./helper/context";
+import { ref, computed, defineComponent, h, PropType, watch } from "vue";
 import LayoutSidebar from "./Sidebar";
 import LayoutHeader from "./Header";
 import LayoutContent from "./Content";
@@ -53,16 +52,6 @@ const Layout = defineComponent({
   },
   emits: ["update:collapse"],
   setup(props, { emit }) {
-    createProvider(
-      reactive({
-        absolute: props.absolute,
-        logo: props.logo,
-        title: props.title,
-        homeRoute: props.homeRoute,
-        activeMenuRules: props.activeMenuRules,
-      }),
-    );
-
     const innerCollapse = ref(props.collapse);
     watch(
       () => props.collapse,
@@ -103,6 +92,11 @@ const Layout = defineComponent({
     const {
       data,
       fixedHeader,
+      activeMenuRules,
+      homeRoute,
+      absolute,
+      title,
+      logo,
 
       innerCollapse,
       mainWidthStyle,
@@ -128,6 +122,11 @@ const Layout = defineComponent({
             collapse: innerCollapse,
             data,
             collapseWidth,
+            activeMenuRules,
+            homeRoute,
+            absolute,
+            title,
+            logo,
           },
           {
             sidebarTop: $slots["sidebar-top"],

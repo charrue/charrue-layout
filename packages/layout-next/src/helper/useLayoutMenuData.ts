@@ -1,15 +1,15 @@
 /* eslint-disable max-statements */
-import { computed, ref, watch } from "vue";
-import { useRoute, useRouter } from "vue-router";
+import { computed, ref, watch, getCurrentInstance } from "vue";
 import { pathToRegexp } from "path-to-regexp";
 import { cleanPath, urlToList, warn } from "./utils";
 import { LayoutMenuItem, LayoutMenuItemVO, ActiveMenuRulesType } from "./types";
+import type { Router, RouteLocationNormalizedLoaded } from "vue-router";
 
 export const useLayoutMenuData = (
   data: LayoutMenuItem[] = [],
   activeMenuRules: ActiveMenuRulesType = {},
 ) => {
-  const router = useRouter();
+  const router = (getCurrentInstance()?.proxy as any)?.$router as Router;
   const allRoutes = router.getRoutes();
   const globalRouteNamePathMapping = allRoutes.reduce((acc, cur) => {
     const routeName = String(cur.name) || "";
@@ -93,7 +93,7 @@ export const useLayoutMenuData = (
     });
   });
 
-  const route = useRoute();
+  const route = (getCurrentInstance()?.proxy as any)?.$route as RouteLocationNormalizedLoaded;
   const activeRoutePath = ref("");
   const openKeys = ref<string[]>([]);
   const activeMenuRuleKeys = computed(() => Object.keys(activeMenuRules));

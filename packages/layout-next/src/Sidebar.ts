@@ -3,7 +3,6 @@ import { RouterLink } from "vue-router";
 import { ElMenu } from "element-plus";
 import SidebarItem from "./SidebarItem";
 import { useLayoutMenuData } from "./helper/useLayoutMenuData";
-import { useLayoutContext } from "./helper/context";
 import { LayoutMenuItem } from "./helper/types";
 
 const LayoutSidebar = defineComponent({
@@ -22,20 +21,33 @@ const LayoutSidebar = defineComponent({
       type: Boolean,
       default: false,
     },
+    logo: {
+      type: String,
+      default: "",
+    },
+    title: {
+      type: String,
+      default: "",
+    },
+    homeRoute: {
+      type: [String, Object] as PropType<string | { name: string }>,
+      default: "/",
+    },
+    absolute: {
+      type: Boolean,
+      default: false,
+    },
+    activeMenuRules: {
+      type: Object,
+    },
   },
   setup(props) {
-    const context = useLayoutContext();
     const { computedMenuData, activeRoutePath, openKeys } = useLayoutMenuData(
       props.data,
-      context?.activeMenuRules,
+      props.activeMenuRules,
     );
 
     return {
-      absolute: context.absolute,
-      homeRoute: context.homeRoute,
-      logo: context.logo,
-      title: context.title,
-
       activeRoutePath,
       openKeys,
       computedMenuData,
