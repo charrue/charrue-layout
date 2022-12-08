@@ -11,6 +11,10 @@ const Header = defineComponent({
     collapse: {
       type: Boolean,
     },
+    showTrigger: {
+      type: Boolean,
+      default: true,
+    },
   },
   emits: ["update:collapse"],
   setup(props, { emit }) {
@@ -23,37 +27,38 @@ const Header = defineComponent({
     };
   },
   render() {
-    const { fixedHeader, toggleSideBar, $attrs, $slots } = this;
+    const { collapse, fixedHeader, showTrigger, toggleSideBar, $attrs, $slots } = this;
     return h(
       "div",
       {
-        class: ["charrue-header", fixedHeader ? "fixed-header" : ""],
+        class: ["cl-header-root", fixedHeader ? "cl-header-root--fixed" : ""],
         style: $attrs.style,
       },
       [
         h(
           "div",
           {
-            class: "charrue-header-inner",
+            class: "cl-header-body",
           },
           [
             h(
               "div",
               {
-                class: "charrue-header-left",
+                class: "cl-header__left",
               },
               [
-                $slots.headerLeft
-                  ? $slots.headerLeft()
-                  : h(Hamburger, {
-                      onChange: toggleSideBar,
-                    }),
+                showTrigger &&
+                  h(Hamburger, {
+                    isActive: collapse === false,
+                    onChange: toggleSideBar,
+                  }),
+                $slots.headerLeft && $slots.headerLeft(),
               ],
             ),
             h(
               "div",
               {
-                class: "charrue-header-right",
+                class: "cl-header__right",
               },
               [$slots.headerRight ? $slots.headerRight() : null],
             ),

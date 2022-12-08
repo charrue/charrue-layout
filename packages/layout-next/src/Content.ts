@@ -7,27 +7,27 @@ const LayoutContent = defineComponent({
     return h(
       "div",
       {
-        class: "charrue-content",
+        class: "cl-content__body",
       },
       [
         h(
           "div",
           {
-            class: "charrue-content-header",
+            class: "cl-content__header",
           },
           [$slots.contentHeader ? $slots.contentHeader() : null],
         ),
         h(
           "div",
           {
-            class: "charrue-content-body",
+            class: "cl-content__main",
           },
           [$slots.content ? $slots.content() : null],
         ),
         h(
           "div",
           {
-            class: "charrue-content-footer",
+            class: "cl-content__footer",
           },
           [$slots.contentFooter ? $slots.contentFooter() : null],
         ),

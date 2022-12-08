@@ -1,31 +1,31 @@
-.charrue-header {
+.cl-header-root {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  height: var(--charrue-header-height, $charrue-header-height);
-  overflow: hidden;
   position: relative;
-  background-color: var(--charrue-header-bg-color, $charrue-header-bg-color);
-  color: var(--charrue-header-text-color, $charrue-header-text-color);
-  box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+  justify-content: space-between;
+  overflow: hidden;
+  height: var(--cl-header-height);
+  background: var(--cl-header-bg);
+  color: var(--cl-header-text-color);
+  box-shadow: var(--cl-header-shadow);
 
-  &.fixed-header {
+  &--fixed {
     position: fixed;
     top: 0;
     right: 0;
-    z-index: 9;
-    transition: width 0.28s;
+    z-index: var(--cl-fixed-header-z-index);
+    transition: width var(--cl-duration);
   }
 
-  > .charrue-header-inner {
+  > .cl-header-body {
     flex: 1;
     display: flex;
     justify-content: space-between;
     align-items: center;
     height: 100%;
 
-    .charrue-header-left,
-    .charrue-header-right {
+    .cl-header__left,
+    .cl-header__right {
       display: flex;
       align-items: center;
       padding-left: 24px;
@@ -33,34 +33,33 @@
       height: 100%;
     }
 
-    .charrue-layout-trigger {
+    .cl-collapse-trigger {
       display: flex;
       align-items: center;
-      height: var(--charrue-header-height, $charrue-header-height);
-      line-height: var(--charrue-header-height, $charrue-header-height);
-      padding: 0 16px;
       cursor: pointer;
-      transition: background 0.3s;
+      height: var(--cl-collapse-trigger-height);
+      line-height: var(--cl-collapse-trigger-height);
+      padding: var(--cl-collapse-trigger-padding);
+      transition: background var(--cl-duration);
       -webkit-tap-highlight-color: transparent;
 
       &:hover {
-        background: rgba(0, 0, 0, 0.025);
+        background: var(--cl-collapse-trigger-active-bg);
       }
 
-      .charrue-layout-default-trigger {
+      &--active {
+        > svg {
+          transform: rotate(180deg);
+        }
+      }
+
+      > svg {
         display: inline-block;
         vertical-align: middle;
         width: 20px;
         height: 20px;
-        &.is-active {
-          transform: rotate(180deg);
-        }
+        fill: var(--cl-header-text-color);
       }
     }
   }
 }
-
-.fixed-header + .charrue-layout-content-main {
-  margin-top: var(--charrue-header-height, $charrue-header-height);
-}
-

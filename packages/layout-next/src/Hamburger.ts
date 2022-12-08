@@ -23,16 +23,13 @@ const Hamburger = defineComponent({
     return h(
       "div",
       {
-        class: "charrue-layout-trigger",
+        class: isActive ? "cl-collapse-trigger cl-collapse-trigger--active" : "cl-collapse-trigger",
         onClick: toggleClick,
       },
       [
         h(
           "svg",
           {
-            class: isActive
-              ? "is-active charrue-layout-default-trigger"
-              : "charrue-layout-default-trigger",
             viewBox: "0 0 1024 1024",
             xmlns: "http://www.w3.org/2000/svg",
             width: "64",

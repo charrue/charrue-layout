@@ -1,40 +1,46 @@
-$charrue-header-height: 50px;
-$charrue-title-font-size: 18px;
-$charrue-header-text-color: #a6adb4;
-$charrue-header-bg-color: #fff;
+:root {
+  --cl-root-height: 100vh;
+  --cl-content-gap-x: 0px;
+  --cl-content-gap-y: 0px;
+  --cl-duration: 0.3s;
 
-$charrue-sidebar-border-color: transparent;
-$charrue-sidebar-text-color: #a6adb4;
-$charrue-sidebar-bg-color: #001529;
-$charrue-sidebar-hover-text-color: #fff;
-$charrue-sidebar-hover-bg-color: #1890ff;
-$charrue-sidebar-active-text-color: #fff;
-$charrue-sidebar-submenu-active-bg-color: #000c17;
+  --cl-collapse-trigger-height: var(--cl-header-height);
+  --cl-collapse-trigger-padding: 0 16px;
+  --cl-collapse-trigger-active-bg: rgba(0, 0, 0, 0.025);
 
-@mixin common-menu-text-color {
-  color: var(--charrue-sidebar-text-color, $charrue-sidebar-text-color);
-  --el-menu-text-color: var(--charrue-sidebar-text-color, $charrue-sidebar-text-color);
-}
-@mixin common-menu-bg {
-  background-color: var(--charrue-sidebar-bg-color, $charrue-sidebar-bg-color);
-  --el-menu-bg-color: var(--charrue-sidebar-bg-color, $charrue-sidebar-bg-color);
-}
+  --cl-sidebar-z-index: 100;
+  --cl-sidebar-shadow: 2px 0 8px 0 rgb(29 35 41 / 5%);
+  --cl-sidebar-bg: var(--el-menu-bg-color, transparent);
+  --cl-sidebar-border-color: transparent;
+  --cl-sidebar-text-color: var(--el-menu-text-color, #E5EAF3);
 
-@mixin menu-hover-text-color {
-  color: var(--charrue-sidebar-hover-text-color, $charrue-sidebar-hover-text-color);
-}
-@mixin menu-hover-bg {
-  background-color: var(--charrue-sidebar-hover-bg-color, $charrue-sidebar-hover-bg-color);
-  --el-menu-active-color: var(--charrue-sidebar-hover-bg-color, $charrue-sidebar-hover-bg-color);
-}
+  --cl-sidebar-hover-text-color: var(--cl-sidebar-text-color);
+  --cl-sidebar-hover-bg: var(--el-menu-hover-bg-color, #18222c);
 
-@mixin menu-active-text-color {
-  color: var(--charrue-sidebar-active-text-color, var(--charrue-sidebar-hover-text-color, $charrue-sidebar-hover-text-color));
-}
-@mixin menu-active-bg {
-  background-color: var(--charrue-sidebar-active-bg-color, var(--charrue-sidebar-hover-bg-color, $charrue-sidebar-hover-bg-color));
-}
 
-@mixin submenu-active-text-color {
-  background-color: var(--charrue-sidebar-submenu-active-bg-color, $charrue-sidebar-submenu-active-bg-color);
+  --cl-sidebar-active-text-color: var(--el-menu-active-color, #409eff);
+  --cl-sidebar-active-bg: var(--el-menu-bg-color, transparent);
+
+  --cl-sidebar-submenu-text-color: var(--cl-sidebar-text-color);
+  --cl-sidebar-submenu-bg: var(--cl-sidebar-bg);
+
+  --cl-sidebar-submenu-hover-text-color: var(--cl-sidebar-hover-text-color);
+  --cl-sidebar-submenu-hover-bg: var(--cl-sidebar-hover-bg);
+
+  --cl-sidebar-submenu-active-text-color: var(--cl-sidebar-active-text-color);
+  --cl-sidebar-submenu-active-bg: var(--cl-sidebar-active-bg);
+
+  --cl-fixed-header-z-index: 20;
+  --cl-header-height: 50px;
+  --cl-header-bg: #fff;
+  --cl-header-text-color: #a6adb4;
+  --cl-header-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+
+
+  --cl-login-padding: 8px 12px;
+  --cl-login-height: 32px;
+
+  --cl-title-margin: 0 0 0 16px;
+  --cl-title-font-size: 20px;
+  --cl-title-color: var(--cl-header-text-color, #a6adb4);
 }

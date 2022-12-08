@@ -1,13 +1,7 @@
 .charrue-layout {
   position: relative;
-  height: 100%;
-  width: 100%;
   display: flex;
-
-  &-body {
-    flex: 1;
-    min-height: 100%;
-    transition: margin-left 0.28s;
-    position: relative;
-  }
+  justify-content: space-between;
+  height: var(--cl-root-height);
+  width: 100%;
 }

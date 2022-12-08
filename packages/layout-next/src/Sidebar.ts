@@ -41,89 +41,119 @@ const LayoutSidebar = defineComponent({
       type: Object,
     },
   },
-  setup(props, { slots }) {
+  setup(props) {
     const { computedMenuData, activeRoutePath, openKeys } = useLayoutMenuData(
       props.data,
       props.activeMenuRules,
     );
 
-    return () =>
-      h(
-        "div",
-        {
-          class: "charrue-sidebar-root",
-        },
-        [
-          h("div", {
-            class: "charrue-sidebar-placeholder",
+    return {
+      activeRoutePath,
+      openKeys,
+      computedMenuData,
+    };
+  },
+  render() {
+    const {
+      collapse,
+      collapseWidth,
+
+      absolute,
+      homeRoute,
+      logo,
+      title,
+
+      activeRoutePath,
+      openKeys,
+      computedMenuData,
+
+      $slots,
+    } = this;
+
+    return h(
+      "div",
+      {
+        class: "cl-sidebar-root",
+      },
+      [
+        h("div", {
+          class: "cl-sidebar-placeholder",
+          style: {
+            width: `${collapseWidth}px`,
+          },
+        }),
+        h(
+          "div",
+          {
+            class: "cl-sidebar-body",
             style: {
-              width: `${props.collapseWidth}px`,
+              width: `${collapseWidth}px`,
+              position: absolute ? "absolute" : "fixed",
             },
-          }),
-          h(
-            "div",
-            {
-              class: "charrue-sidebar-inner",
-              style: {
-                width: `${props.collapseWidth}px`,
-                position: props.absolute ? "absolute" : "fixed",
-              },
-            },
-            [
-              (props.logo || props.title) &&
-                h(
-                  "div",
-                  {
-                    class: "charrue-logo-container",
-                  },
-                  [
-                    h(
-                      RouterLink,
-                      {
-                        class: "menu-router-link",
-                        to: props.homeRoute,
-                      },
-                      {
-                        default: () => [
-                          props.logo &&
-                            h("img", {
-                              src: props.logo,
-                            }),
-                          props.title && h("h1", {}, props.title),
-                        ],
-                      },
-                    ),
-                  ],
-                ),
-
-              slots.sidebarTop ? slots.sidebarTop() : null,
-
+          },
+          [
+            (logo || title) &&
               h(
-                ElMenu,
+                "div",
                 {
-                  class: "charrue-sidebar-menu-root",
-                  mode: "vertical",
-                  uniqueOpened: true,
-                  collapse: props.collapse,
-                  defaultActive: activeRoutePath.value,
-                  defaultOpeneds: openKeys.value,
+                  class: "cl-sidebar__logo-container",
                 },
-                {
-                  default: () =>
-                    computedMenuData.value.map((item, index) => {
-                      return h(SidebarItem, {
-                        key: `${item.path}-${index}`,
-                        menuItem: item,
-                      });
-                    }),
-                },
+                [
+                  h(
+                    RouterLink,
+                    {
+                      class: "cl-menu-router-link",
+                      to: homeRoute,
+                    },
+                    {
+                      default: () => [
+                        logo &&
+                          h("img", {
+                            class: "cl-sidebar__logo",
+                            src: logo,
+                          }),
+                        title &&
+                          h(
+                            "h1",
+                            {
+                              class: "cl-sidebar__title",
+                            },
+                            title,
+                          ),
+                      ],
+                    },
+                  ),
+                ],
               ),
 
-              slots.sidebarBottom ? slots.sidebarBottom() : null,
-            ],
-          ),
-        ],
-      );
+            $slots.sidebarTop ? $slots.sidebarTop() : null,
+
+            h(
+              ElMenu,
+              {
+                class: "cl-sidebar-menu-root",
+                mode: "vertical",
+                uniqueOpened: true,
+                collapse,
+                defaultActive: activeRoutePath,
+                defaultOpeneds: openKeys,
+              },
+              {
+                default: () =>
+                  computedMenuData.map((item, index) => {
+                    return h(SidebarItem, {
+                      key: `${item.path}-${index}`,
+                      menuItem: item,
+                    });
+                  }),
+              },
+            ),
+
+            $slots.sidebarBottom ? $slots.sidebarBottom() : null,
+          ],
+        ),
+      ],
+    );
   },
 });
 

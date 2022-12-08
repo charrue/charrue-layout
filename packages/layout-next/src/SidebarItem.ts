@@ -22,12 +22,12 @@ const SidebarItem = defineComponent({
   render() {
     const { menuItem, menuChildren } = this;
     const Icon = h("i", {
-      class: ["charrue-sidebar-menu-icon", menuItem.icon],
+      class: ["cl-sidebar__menu-icon", menuItem.icon],
     });
     const MenuTitle = h(
       "span",
       {
-        class: "charrue-sidebar-menu-title",
+        class: "cl-sidebar__menu-title",
       },
       menuItem.title,
     );
@@ -35,7 +35,7 @@ const SidebarItem = defineComponent({
     return h(
       "div",
       {
-        class: "charrue-sidebar-menu-children",
+        class: "cl-sidebar__menu-children",
       },
       [
         menuChildren.length > 0
@@ -44,6 +44,7 @@ const SidebarItem = defineComponent({
               {
                 index: menuItem.path,
                 popperAppendToBody: true,
+                "popper-class": "cl-sidebar__submenu-popper",
               },
               {
                 title: () =>
@@ -51,8 +52,8 @@ const SidebarItem = defineComponent({
                     "div",
                     {
                       class: [
-                        "charrue-submenu-title",
-                        menuItem.icon ? "charrue-submenu-title-with-icon" : "",
+                        "cl-sidebar__submenu-title",
+                        menuItem.icon ? "cl-sidebar__submenu-icon-title" : "",
                       ],
                     },
                     [Icon, MenuTitle],
@@ -70,7 +71,7 @@ const SidebarItem = defineComponent({
               RouterLink,
               {
                 to: menuItem.path,
-                class: "charrue-menu-router-link",
+                class: "cl-sidebar__menu-link",
               },
               {
                 default: () =>
@@ -90,5 +91,4 @@ const SidebarItem = defineComponent({
     );
   },
 });
-
 export default SidebarItem;

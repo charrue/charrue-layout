@@ -21,6 +21,10 @@ const Layout = defineComponent({
       type: Boolean,
       default: true,
     },
+    showTrigger: {
+      type: Boolean,
+      default: true,
+    },
     logo: {
       type: String,
       default: "",
@@ -51,7 +55,7 @@ const Layout = defineComponent({
     },
   },
   emits: ["update:collapse"],
-  setup(props, { emit, slots }) {
+  setup(props, { emit }) {
     const innerCollapse = ref(props.collapse);
     watch(
       () => props.collapse,
@@ -59,18 +63,18 @@ const Layout = defineComponent({
         innerCollapse.value = props.collapse;
       },
     );
-    const onCollapsedChange = () => {
-      innerCollapse.value = !innerCollapse.value;
+    const onCollapsedChange = (val: boolean) => {
+      innerCollapse.value = val;
       emit("update:collapse", innerCollapse.value);
     };
 
     const collapseWidth = computed(() => {
-      return props.collapse ? props.sidebarWidth[0] : props.sidebarWidth[1];
+      return innerCollapse.value ? props.sidebarWidth[0] : props.sidebarWidth[1];
     });
 
     const mainWidthStyle = computed(() => {
       return {
-        width: `calc(100% - ${collapseWidth.value}px)`,
+        width: `calc(100% - ${collapseWidth.value}px - var(--cl-content-gap-x))`,
       };
     });
     const headerWidthStyle = computed(() => {
@@ -80,66 +84,94 @@ const Layout = defineComponent({
       return { width: "100%" };
     });
 
-    return () =>
-      h(
-        "div",
-        {
-          class: [
-            "charrue-layout",
-            innerCollapse.value ? "charrue-layout--collapse" : "charrue-layout--opened",
-          ],
-        },
-        [
-          h(
-            LayoutSidebar,
-            {
-              collapse: innerCollapse.value,
-              data: props.data,
-              collapseWidth: collapseWidth.value,
-              activeMenuRules: props.activeMenuRules,
-              homeRoute: props.homeRoute,
-              absolute: props.absolute,
-              title: props.title,
-              logo: props.logo,
-            },
-            {
-              sidebarTop: slots["sidebar-top"],
-              sidebarBottom: slots["sidebar-bottom"],
-            },
-          ),
-          h(
-            "div",
-            {
-              class: "charrue-layout-body",
-              style: mainWidthStyle.value,
-            },
-            [
-              h(
-                LayoutHeader,
-                {
-                  style: headerWidthStyle.value,
-                  fixedHeader: props.fixedHeader,
-                  collapse: innerCollapse.value,
-                  "onUpdate:collapse": onCollapsedChange,
-                },
-                {
-                  headerLeft: slots["header-left"],
-                  headerRight: slots["header-right"],
-                },
-              ),
-              h(
-                LayoutContent,
-                {},
-                {
-                  contentHeader: slots["content-header"],
-                  content: slots.default,
-                  contentFooter: slots["content-footer"],
-                },
-              ),
-            ],
-          ),
+    return {
+      innerCollapse,
+      collapseWidth,
+      onCollapsedChange,
+      mainWidthStyle,
+      headerWidthStyle,
+    };
+  },
+  render() {
+    const {
+      data,
+      fixedHeader,
+      showTrigger,
+      activeMenuRules,
+      homeRoute,
+      absolute,
+      title,
+      logo,
+
+      innerCollapse,
+      mainWidthStyle,
+      headerWidthStyle,
+      collapseWidth,
+      onCollapsedChange,
+
+      $slots,
+    } = this;
+
+    return h(
+      "div",
+      {
+        class: [
+          "charrue-layout",
+          innerCollapse ? "charrue-layout--collapse" : "charrue-layout--opened",
         ],
-      );
+      },
+      [
+        h(
+          LayoutSidebar,
+          {
+            collapse: innerCollapse,
+            data,
+            collapseWidth,
+            activeMenuRules,
+            homeRoute,
+            absolute,
+            title,
+            logo,
+          },
+          {
+            sidebarTop: $slots["sidebar-top"],
+            sidebarBottom: $slots["sidebar-bottom"],
+          },
+        ),
+        h(
+          "div",
+          {
+            class: "cl-content-root",
+            style: mainWidthStyle,
+          },
+          [
+            h(
+              LayoutHeader,
+              {
+                style: headerWidthStyle,
+                showTrigger,
+                fixedHeader,
+                collapse: innerCollapse,
+                "onUpdate:collapse": onCollapsedChange,
+              },
+              {
+                headerLeft: $slots["header-left"],
+                headerRight: $slots["header-right"],
+              },
+            ),
+            h(
+              LayoutContent,
+              {},
+              {
+                contentHeader: $slots["content-header"],
+                content: $slots.default,
+                contentFooter: $slots["content-footer"],
+              },
+            ),
+          ],
+        ),
+      ],
+    );
   },
 });
 
