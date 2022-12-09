@@ -1,17 +1,18 @@
 <template>
-  <div class="example-container" :class="[`theme-${theme}`]">
+  <div class="example-container">
     <charrue-layout
       :collapse="collapsed"
       :data="menuData"
       title="Vue3 Admin"
       logo="https://seeklogo.com/images/E/element-ui-logo-A640D7E503-seeklogo.com.png"
       :active-menu-rules="regexToPath"
-      @update:collapse="(val) => (collapsed = val)"
+      layout="mix"
+      @update:collapse="onChange"
     >
       <template #sidebar-top>
         <div class="side-top-title">主题切换</div>
         <el-radio-group v-model="theme" class="radio-container" @change="onThemeChange">
-          <el-radio label="normal">normal</el-radio>
+          <el-radio label="default">default</el-radio>
           <el-radio label="light">light</el-radio>
           <el-radio label="dark">dark</el-radio>
         </el-radio-group>
@@ -39,7 +40,7 @@
 
 <script lang="ts">
 import { defineComponent, ref } from "vue";
-import { defineLayoutConfig } from "@charrue/layout-next"
+import { defineLayoutConfig } from "@charrue/layout-next";
 
 const TOTAL_MENUS = defineLayoutConfig([
   {
@@ -98,7 +99,7 @@ export default defineComponent({
       };
     };
 
-    const theme = ref("dark");
+    const theme = ref("default");
     const onThemeChange = (value) => {
       const cls = Array.from(document.body.classList);
       const idx = cls.findIndex((t) => t.startsWith("theme-"));
@@ -114,6 +115,10 @@ export default defineComponent({
       "/page/page3-plus": "/page/page3",
     });
 
+    const onChange = (val) => {
+      console.log(val);
+    };
+
     return {
       collapsed,
       routeParams,
@@ -121,6 +126,8 @@ export default defineComponent({
       theme,
       onThemeChange,
       regexToPath,
+
+      onChange,
     };
   },
 });
@@ -199,15 +206,25 @@ export default defineComponent({
 </style>
 
 <style>
-:root {
-  --layout-aside-content-bg-color: #ebf1f6;
-  --layout-aside-active-text-color: #2f9afd;
-  --layout-aside-active-bg-color: #f5f8fb;
-  --layout-aside-normal-text-color: #606266;
+.theme-dark {
+  --cl-sidebar-bg: #001529;
+  --cl-sidebar-text-color: #99a1a9;
 
-  --layout-aside-hover-text-color: #2f9afd;
-  --layout-aside-hover-bg-color: #f5f8fb;
+  --cl-sidebar-hover-bg: #1890ff;
+  --cl-sidebar-hover-text-color: #fff;
 
-  --layout-aside-active-submenu-bg-color: #ebf1f6;
+  --cl-sidebar-active-bg: #1890ff;
+  --cl-sidebar-active-text-color: #fff;
+  --cl-sidebar-submenu-active-bg: #000c17;
+
+  --cl-sidebar-submenu-hover-text-color: var(--cl-sidebar-hover-text-color);
+  --cl-sidebar-submenu-text-color: #99a1a9;
+  --cl-sidebar-submenu-hover-bg: var(--cl-sidebar-hover-bg);
+
+  --cl-header-bg: var(--cl-sidebar-bg);
+  --cl-header-text-color: #fff;
+  --cl-title-color: var(--cl-header-text-color);
+
+  --cl-collapse-trigger-active-bg: #000c17;
 }
 </style>
