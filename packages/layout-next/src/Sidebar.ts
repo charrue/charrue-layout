@@ -1,9 +1,9 @@
 import { defineComponent, h, PropType } from "vue";
-import { RouterLink } from "vue-router";
 import { ElMenu } from "element-plus";
 import SidebarItem from "./SidebarItem";
 import { useLayoutMenuData } from "./helper/useLayoutMenuData";
 import { LayoutMenuItem } from "./helper/types";
+import { Logo } from "./Logo";
 
 const LayoutSidebar = defineComponent({
   name: "CharrueLayoutSidebar",
@@ -54,22 +54,6 @@ const LayoutSidebar = defineComponent({
     };
   },
   render() {
-    const {
-      collapse,
-      collapseWidth,
-
-      absolute,
-      homeRoute,
-      logo,
-      title,
-
-      activeRoutePath,
-      openKeys,
-      computedMenuData,
-
-      $slots,
-    } = this;
-
     return h(
       "div",
       {
@@ -79,7 +63,7 @@ const LayoutSidebar = defineComponent({
         h("div", {
           class: "cl-sidebar-placeholder",
           style: {
-            width: `${collapseWidth}px`,
+            width: `${this.collapseWidth}px`,
           },
         }),
         h(
@@ -87,46 +71,18 @@ const LayoutSidebar = defineComponent({
           {
             class: "cl-sidebar-body",
             style: {
-              width: `${collapseWidth}px`,
-              position: absolute ? "absolute" : "fixed",
+              width: `${this.collapseWidth}px`,
+              position: this.absolute ? "absolute" : "fixed",
             },
           },
           [
-            (logo || title) &&
-              h(
-                "div",
-                {
-                  class: "cl-sidebar__logo-container",
-                },
-                [
-                  h(
-                    RouterLink,
-                    {
-                      class: "cl-menu-router-link",
-                      to: homeRoute,
-                    },
-                    {
-                      default: () => [
-                        logo &&
-                          h("img", {
-                            class: "cl-sidebar__logo",
-                            src: logo,
-                          }),
-                        title &&
-                          h(
-                            "h1",
-                            {
-                              class: "cl-sidebar__title",
-                            },
-                            title,
-                          ),
-                      ],
-                    },
-                  ),
-                ],
-              ),
+            h(Logo, {
+              logo: this.logo,
+              title: this.title,
+              homeRoute: this.homeRoute,
+            }),
 
-            $slots.sidebarTop ? $slots.sidebarTop() : null,
+            this.$slots.sidebarTop ? this.$slots.sidebarTop() : null,
 
             h(
               ElMenu,
@@ -134,13 +90,13 @@ const LayoutSidebar = defineComponent({
                 class: "cl-sidebar-menu-root",
                 mode: "vertical",
                 uniqueOpened: true,
-                collapse,
-                defaultActive: activeRoutePath,
-                defaultOpeneds: openKeys,
+                collapse: this.collapse,
+                defaultActive: this.activeRoutePath,
+                defaultOpeneds: this.openKeys,
               },
               {
                 default: () =>
-                  computedMenuData.map((item, index) => {
+                  this.computedMenuData.map((item, index) => {
                     return h(SidebarItem, {
                       key: `${item.path}-${index}`,
                       menuItem: item,
@@ -149,7 +105,7 @@ const LayoutSidebar = defineComponent({
               },
             ),
 
-            $slots.sidebarBottom ? $slots.sidebarBottom() : null,
+            this.$slots.sidebarBottom ? this.$slots.sidebarBottom() : null,
           ],
         ),
       ],

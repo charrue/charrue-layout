@@ -2,7 +2,8 @@
   --cl-root-height: 100vh;
   --cl-content-gap-x: 0px;
   --cl-content-gap-y: 0px;
-  --cl-duration: 0.3s;
+  --cl-transition-duration: 0.3s;
+  --cl-transition-timing-function: cubic-bezier(.645,.045,.355,1);
 
   --cl-collapse-trigger-height: var(--cl-header-height);
   --cl-collapse-trigger-padding: 0 16px;
@@ -41,6 +42,6 @@
   --cl-login-height: 32px;
 
   --cl-title-margin: 0 0 0 16px;
-  --cl-title-font-size: 20px;
+  --cl-title-font-size: 18px;
   --cl-title-color: var(--cl-header-text-color, #a6adb4);
 }

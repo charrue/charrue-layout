@@ -14,7 +14,7 @@
     top: 0;
     right: 0;
     z-index: var(--cl-fixed-header-z-index);
-    transition: width var(--cl-duration);
+    transition: all var(--cl-transition-duration) var(--cl-transition-timing-function);
   }
 
   > .cl-header-body {
@@ -40,7 +40,7 @@
       height: var(--cl-collapse-trigger-height);
       line-height: var(--cl-collapse-trigger-height);
       padding: var(--cl-collapse-trigger-padding);
-      transition: background var(--cl-duration);
+      transition: all var(--cl-transition-duration) var(--cl-transition-timing-function);
       -webkit-tap-highlight-color: transparent;
 
       &:hover {

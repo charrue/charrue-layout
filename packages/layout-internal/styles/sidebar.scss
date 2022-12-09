@@ -1,8 +1,23 @@
 .cl-sidebar-root {
   --cl-sidebar-margin: 0 0 8px 0;
 
+  ::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.06);
+    border-radius: 3px;
+    box-shadow: inset 0 0 5px rgb(0 21 41 / 5%);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.12);
+    border-radius: 3px;
+    box-shadow: inset 0 0 5px rgb(0 21 41 / 5%);
+  }
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
   .cl-sidebar-placeholder {
-    transition: all var(--cl-duration);
+    transition: all var(--cl-transition-duration) var(--cl-transition-timing-function);
   }
 
   .cl-sidebar-body {
@@ -12,49 +27,13 @@
     top: 0;
     bottom: 0;
     overflow-x: hidden;
-    transition: all var(--cl-duration);
+    transition: all var(--cl-transition-duration) var(--cl-transition-timing-function);
     background: var(--cl-sidebar-bg);
     z-index: var(--cl-sidebar-z-index);
     box-shadow: var(--cl-sidebar-shadow);
 
-    // &::before {
-    //   content: "";
-    //   position: absolute;
-    //   top: 0;
-    //   bottom: 0;
-    //   right: 0;
-    //   height: 100%;
-    //   width: 1px;
-    //   background: var(--cl-sidebar-border-color);
-    // }
-
     &.collapse {
       overflow: hidden;
-    }
-
-    > .cl-sidebar__logo-container {
-      position: relative;
-      height: var(--cl-header-height);
-      line-height: var(--cl-header-height);
-      padding: var(--cl-login-padding);
-      transition: all var(--cl-duration);
-      background: var(--cl-sidebar-bg);
-      overflow: hidden;
-      img {
-        display: inline-block;
-        vertical-align: middle;
-        height: var(--cl-login-height);
-        width: var(--cl-login-height);
-        line-height: var(--cl-login-height);
-      }
-      h1 {
-        color: var(--cl-title-color);
-        display: inline-block;
-        vertical-align: middle;
-        font-size: var(--cl-title-font-size);
-        margin: var(--cl-title-margin);
-        font-weight: 600;
-      }
     }
 
     > .cl-sidebar-menu-root {
@@ -66,6 +45,7 @@
 
   .cl-sidebar__menu-title {
     margin: var(--cl-sidebar-margin);
+    transition: all .3s cubic-bezier(.645,.045,.355,1);
   }
 
   .el-menu {
@@ -217,7 +197,4 @@
 
 .el-menu--popup {
   padding: 0;
-}
-.cl-sidebar__submenu-popper {
-  // 
 }

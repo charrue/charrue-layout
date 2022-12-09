@@ -1,7 +1,7 @@
 import { defineComponent, h } from "vue";
 
 const Hamburger = defineComponent({
-  name: "HamburgerTrigger",
+  name: "CharrueLayoutTrigger",
   props: {
     isActive: {
       type: Boolean,

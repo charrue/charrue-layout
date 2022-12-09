@@ -33,6 +33,11 @@ const Layout = defineComponent({
       type: String,
       default: "",
     },
+    layout: {
+      type: String as PropType<"side" | "mix">,
+      validator: (val: string) => ["side", "mix"].includes(val),
+      default: "side",
+    },
     homeRoute: {
       type: [String, Object] as PropType<string | { name: string }>,
       default: "/",
@@ -73,15 +78,25 @@ const Layout = defineComponent({
     });
 
     const mainWidthStyle = computed(() => {
-      return {
-        width: `calc(100% - ${collapseWidth.value}px - var(--cl-content-gap-x))`,
-      };
+      return `calc(100% - ${collapseWidth.value}px - var(--cl-content-gap-x))`;
     });
+
     const headerWidthStyle = computed(() => {
-      if (props.fixedHeader) {
-        return mainWidthStyle.value;
+      if (props.layout === "mix") {
+        return "100%";
       }
-      return { width: "100%" };
+      if (props.fixedHeader) {
+        return `calc(100% - ${collapseWidth.value}px)`;
+      }
+      return "100%";
+    });
+
+    const rootClassName = computed(() => {
+      return [
+        "charrue-layout",
+        innerCollapse.value ? "charrue-layout--collapse" : "charrue-layout--opened",
+        props.layout === "mix" ? "charrue-layout--mix" : "charrue-layout--side",
+      ];
     });
 
     return {
@@ -90,82 +105,68 @@ const Layout = defineComponent({
       onCollapsedChange,
       mainWidthStyle,
       headerWidthStyle,
+      rootClassName,
     };
   },
   render() {
-    const {
-      data,
-      fixedHeader,
-      showTrigger,
-      activeMenuRules,
-      homeRoute,
-      absolute,
-      title,
-      logo,
-
-      innerCollapse,
-      mainWidthStyle,
-      headerWidthStyle,
-      collapseWidth,
-      onCollapsedChange,
-
-      $slots,
-    } = this;
-
     return h(
       "div",
       {
-        class: [
-          "charrue-layout",
-          innerCollapse ? "charrue-layout--collapse" : "charrue-layout--opened",
-        ],
+        class: this.rootClassName,
       },
       [
         h(
           LayoutSidebar,
           {
-            collapse: innerCollapse,
-            data,
-            collapseWidth,
-            activeMenuRules,
-            homeRoute,
-            absolute,
-            title,
-            logo,
+            collapse: this.innerCollapse,
+            data: this.data,
+            collapseWidth: this.collapseWidth,
+            activeMenuRules: this.activeMenuRules,
+            absolute: this.absolute,
+            logo: this.layout === "side" ? this.logo : "",
+            title: this.layout === "side" ? this.title : "",
+            homeRoute: this.homeRoute,
           },
           {
-            sidebarTop: $slots["sidebar-top"],
-            sidebarBottom: $slots["sidebar-bottom"],
+            sidebarTop: this.$slots["sidebar-top"],
+            sidebarBottom: this.$slots["sidebar-bottom"],
           },
         ),
         h(
           "div",
           {
             class: "cl-content-root",
-            style: mainWidthStyle,
+            style: {
+              width: this.mainWidthStyle,
+            },
           },
           [
             h(
               LayoutHeader,
               {
-                style: headerWidthStyle,
-                showTrigger,
-                fixedHeader,
-                collapse: innerCollapse,
-                "onUpdate:collapse": onCollapsedChange,
+                style: {
+                  width: this.headerWidthStyle,
+                },
+                showTrigger: this.showTrigger,
+                fixedHeader: this.fixedHeader,
+                logo: this.layout === "mix" ? this.logo : "",
+                title: this.layout === "mix" ? this.title : "",
+                homeRoute: this.homeRoute,
+                collapse: this.innerCollapse,
+                "onUpdate:collapse": this.onCollapsedChange,
               },
               {
-                headerLeft: $slots["header-left"],
-                headerRight: $slots["header-right"],
+                headerLeft: this.$slots["header-left"],
+                headerRight: this.$slots["header-right"],
               },
             ),
             h(
               LayoutContent,
               {},
               {
-                contentHeader: $slots["content-header"],
-                content: $slots.default,
-                contentFooter: $slots["content-footer"],
+                contentHeader: this.$slots["content-header"],
+                content: this.$slots.default,
+                contentFooter: this.$slots["content-footer"],
               },
             ),
           ],

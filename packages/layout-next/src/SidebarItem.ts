@@ -3,7 +3,7 @@ import { ElMenuItem, ElSubMenu } from "element-plus";
 import { RouterLink } from "vue-router";
 
 const SidebarItem = defineComponent({
-  name: "SidebarItem",
+  name: "CharrueLayoutSidebarItem",
   props: {
     menuItem: {
       type: Object,

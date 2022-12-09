@@ -7,7 +7,7 @@
   overflow: auto;
   box-sizing: border-box;
   min-height: 100%;
-  transition: all var(--cl-duration);
+  transition: all var(--cl-transition-duration);
 
   .cl-content__body {
     margin-top: 0;

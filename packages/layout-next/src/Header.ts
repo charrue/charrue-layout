@@ -1,5 +1,6 @@
-import { defineComponent, h } from "vue";
+import { defineComponent, h, PropType } from "vue";
 import Hamburger from "./Hamburger";
+import { Logo } from "./Logo";
 
 const Header = defineComponent({
   name: "CharrueLayoutHeader",
@@ -15,6 +16,18 @@ const Header = defineComponent({
       type: Boolean,
       default: true,
     },
+    logo: {
+      type: String,
+      default: "",
+    },
+    title: {
+      type: String,
+      default: "",
+    },
+    homeRoute: {
+      type: [String, Object] as PropType<string | { name: string }>,
+      default: "/",
+    },
   },
   emits: ["update:collapse"],
   setup(props, { emit }) {
@@ -27,12 +40,11 @@ const Header = defineComponent({
     };
   },
   render() {
-    const { collapse, fixedHeader, showTrigger, toggleSideBar, $attrs, $slots } = this;
     return h(
       "div",
       {
-        class: ["cl-header-root", fixedHeader ? "cl-header-root--fixed" : ""],
-        style: $attrs.style,
+        class: ["cl-header-root", this.fixedHeader ? "cl-header-root--fixed" : ""],
+        style: this.$attrs.style,
       },
       [
         h(
@@ -47,12 +59,17 @@ const Header = defineComponent({
                 class: "cl-header__left",
               },
               [
-                showTrigger &&
+                h(Logo, {
+                  logo: this.logo,
+                  title: this.title,
+                  homeRoute: this.homeRoute,
+                }),
+                this.showTrigger &&
                   h(Hamburger, {
-                    isActive: collapse === false,
-                    onChange: toggleSideBar,
+                    isActive: this.collapse === false,
+                    onChange: this.toggleSideBar,
                   }),
-                $slots.headerLeft && $slots.headerLeft(),
+                this.$slots.headerLeft && this.$slots.headerLeft(),
               ],
             ),
             h(
@@ -60,7 +77,7 @@ const Header = defineComponent({
               {
                 class: "cl-header__right",
               },
-              [$slots.headerRight ? $slots.headerRight() : null],
+              [this.$slots.headerRight ? this.$slots.headerRight() : null],
             ),
           ],
         ),
