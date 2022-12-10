@@ -82,7 +82,7 @@ const Layout = defineComponent({
     });
 
     const headerWidthStyle = computed(() => {
-      if (props.layout === "mix") {
+      if (props.layout === "mix" || props.data?.length === 0) {
         return "100%";
       }
       if (props.fixedHeader) {
@@ -115,23 +115,25 @@ const Layout = defineComponent({
         class: this.rootClassName,
       },
       [
-        h(
-          LayoutSidebar,
-          {
-            collapse: this.innerCollapse,
-            data: this.data,
-            collapseWidth: this.collapseWidth,
-            activeMenuRules: this.activeMenuRules,
-            absolute: this.absolute,
-            logo: this.layout === "side" ? this.logo : "",
-            title: this.layout === "side" ? this.title : "",
-            homeRoute: this.homeRoute,
-          },
-          {
-            sidebarTop: this.$slots["sidebar-top"],
-            sidebarBottom: this.$slots["sidebar-bottom"],
-          },
-        ),
+        this.data &&
+          this.data.length > 0 &&
+          h(
+            LayoutSidebar,
+            {
+              collapse: this.innerCollapse,
+              data: this.data,
+              collapseWidth: this.collapseWidth,
+              activeMenuRules: this.activeMenuRules,
+              absolute: this.absolute,
+              logo: this.layout === "side" ? this.logo : "",
+              title: this.layout === "side" ? this.title : "",
+              homeRoute: this.homeRoute,
+            },
+            {
+              sidebarTop: this.$slots["sidebar-top"],
+              sidebarBottom: this.$slots["sidebar-bottom"],
+            },
+          ),
         h(
           "div",
           {

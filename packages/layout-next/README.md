@@ -4,10 +4,9 @@
  ![](https://img.shields.io/npm/dt/@charrue/layout-next.svg)
  ![](https://img.shields.io/npm/v/@charrue/layout-next.svg)
 
-### 介绍
-Charrue Layout 是基于Element Plus封装的组件，致力于解决中后台布局的问题，提供自动生成菜单与定制页面布局。
+## 介绍
 
-对于Vue2的项目，可以使用`@charrue/layout`。Vue2的组件API与`@charrue/layout-next`完全一致。
+Charrue Layout 是基于Element Plus封装的组件，致力于解决中后台布局的问题，提供自动生成菜单与定制页面布局。
 
 ### 下载
 
@@ -17,47 +16,108 @@ npm install element-plus @charrue/layout-next
 
 ### 使用
 
+1. 全局注册
 ``` js
 import ElementPlus from "element-plus";
 import Layout from "@charrue/layout-next";
 import "element-plus/dist/index.css";
-import "@charrue/layout-next/dist/index.css";
+import "@charrue/layout-next/dist/index.css"; // 引入样式
 
 const app = createApp(App);
-app.use(ElementPlus);
 app.use(Layout);
 ```
 
+2. 局部注册
+``` vue
+<script setup>
+import { CharrueLayout } from "@charrue/layout-next";
+</script>
 
-### 通过 CSS 变量设置主题
-我们对Layout组件中经常改动的样式属性使用了CSS 变量功能。
+<template>
+  <CharrueLayout>
+    <router-view></router-view>
+  </CharrueLayout>
+</template>
+
+<style>
+@import "@charrue/layout-next/dist/index.css";
+</style>
 
 ```
---charrue-header-height: 顶栏`.charrue-header`的高度
---charrue-title-font-size: 顶部标题的字体大小
---charrue-header-text-color：顶栏的文字颜色
---charrue-header-bg-color: 顶栏的背景颜色
---charrue-sidebar-border-color： 侧栏的右边框颜色
---charrue-sidebar-text-color: 侧栏导航菜单文字颜色
---charrue-sidebar-bg-color: 侧栏导航菜单文字背景颜色
---charrue-sidebar-hover-text-color: 侧栏导航菜单文字处于悬浮状态时的颜色
---charrue-sidebar-hover-bg-color: 侧栏导航菜单处于悬浮状态时的背景颜色
---charrue-sidebar-active-text-color: 侧栏导航菜单处于选中状态时的文字颜色，默认与charrue-sidebar-hover-text-color颜色一致
---charrue-sidebar-active-bg-color: 侧栏导航菜单处于选中状态时的文字颜色，默认与charrue-sidebar-hover-bg-color颜色一致
---charrue-sidebar-submenu-active-bg-color: 侧栏subMenu处于选中状态时的背景颜色
-```
-详细信息可见[`var.scss`](https://github.com/charrue/charrue-layout/blob/master/packages/layout-internal/styles/var.scss)
 
-你可以像这样对上述变量进行自定义：
-``` css
-:root {
-  --charrue-sidebar-bg-color: #2c3643;
-  --charrue-sidebar-hover-bg-color: #c16394;
-  --charrue-sidebar-hover-bg-color: #e6a54e;
-  --charrue-sidebar-active-bg-color: #222a34;
-  --charrue-sidebar-text-color: #41b883;
-  --charrue-sidebar-active-text-color: #fff;
-  --charrue-sidebar-submenu-active-bg-color: #2a2d2e;
+
+
+
+
+## Props
+
+| 属性名          | 类型                        | 默认值      | 说明                                                       |
+| --------------- | --------------------------- | ----------- | ---------------------------------------------------------- |
+| data            | `LayoutMenuItem[]`          | `[]`        | 控制侧边栏数据展示<br />如果为空数组，则不展示侧栏         |
+| collapse        | `boolean`                   | `false`     | 控制菜单的收起和展开                                       |
+| fixedHeader     | `boolean`                   | `true`      | 是否固定 header 到顶部                                     |
+| showTrigger     | `boolean`                   | `true`      | 是否显示菜单折叠触发器                                     |
+| logo            | `string`                    | `''`        | layout 的左上角 的 logo                                    |
+| title           | `string`                    | `''`        | layout 的左上角 的 title                                   |
+| layout          | `side | mix`                | `side`      | layout 的菜单模式,side：右侧导航，mix：混合模式            |
+| homeRoute       | `string | { name: string }` | `/`         | 首页的路由                                                 |
+| absolute        | `boolean`                   | `false`     | 是否设置为`position:absolute`，默认设置为`position: fixed` |
+| sidebarWidth    | `[number, number]`          | `[54, 200]` | 侧边菜单收起和展开的宽度                                   |
+| activeMenuRules | `ActiveMenuRulesType`       | `{}`        | 自定义侧栏菜单高亮规则                                     |
+
+
+
+
+
+## 插槽
+
+| 插槽名         | 说明       |
+| -------------- | ---------- |
+| header-left    | 顶栏左侧   |
+| header-right   | 顶栏右侧   |
+| sidebar-top    | 侧栏顶部   |
+| sidebar-bottom | 侧栏底部   |
+| content-header | 内容区顶部 |
+| default        | 内容区主体 |
+| content-footer | 内容区底部 |
+
+
+
+
+
+## 事件
+
+| 事件            | 说明             |
+| --------------- | ---------------- |
+| update:collapse | 侧栏折叠状态更新 |
+
+
+
+
+
+## 辅助函数
+
+- defineLayoutConfig
+
+```ts
+declare const defineLayoutConfig: (config: LayoutMenuItem[]) => LayoutMenuItem[];
+```
+
+在定义`data`prop时提供类型提示
+
+
+## 类型
+
+``` ts
+interface LayoutMenuItem {
+    title: string;
+    path?: string;
+    name?: string;
+    icon?: string;
+    children?: LayoutMenuItem[];
 }
+
+declare type ActiveMenuRulesType = Record<string, string | {
+    name: string;
+}>;
 ```
-> 因为`el-menu`处于折叠状态时的DOM是在`body`下面的，如果想要将CSS的修改影响到它，则必须将自定义变量放置到`html`或`body`下。
