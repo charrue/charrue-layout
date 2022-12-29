@@ -1,12 +1,13 @@
-import { h, defineComponent, computed } from "vue";
+import { h, defineComponent, computed, PropType } from "vue";
 import { ElMenuItem, ElSubMenu } from "element-plus";
 import { RouterLink } from "vue-router";
+import { LayoutMenuItemVO } from "./helper/types";
 
 const SidebarItem = defineComponent({
   name: "CharrueLayoutSidebarItem",
   props: {
     menuItem: {
-      type: Object,
+      type: Object as PropType<LayoutMenuItemVO>,
       required: true,
     },
   },
@@ -66,6 +67,28 @@ const SidebarItem = defineComponent({
                     });
                   }),
               },
+            )
+          : menuItem.isExternal
+          ? h(
+              "a",
+              {
+                class: "cl-sidebar__menu-link",
+                href: menuItem.path,
+                target: "_blank",
+                rel: "noopener",
+              },
+              [
+                h(
+                  ElMenuItem,
+                  {
+                    index: menuItem.path,
+                  },
+                  {
+                    default: () => Icon,
+                    title: () => MenuTitle,
+                  },
+                ),
+              ],
             )
           : h(
               RouterLink,

@@ -1,7 +1,7 @@
 /* eslint-disable max-statements */
 import { computed, ref, watch, getCurrentInstance } from "vue";
 import { pathToRegexp } from "path-to-regexp";
-import { cleanPath, urlToList, warn } from "./utils";
+import { cleanPath, urlToList, isUrl } from "./utils";
 import { LayoutMenuItem, LayoutMenuItemVO, ActiveMenuRulesType } from "./types";
 import type { Router, RouteLocationNormalizedLoaded } from "vue-router";
 
@@ -28,9 +28,6 @@ export const useLayoutMenuData = (
 
     if (path && !name) {
       const routeName = globalRouteNamePathMapping[path];
-      if (!routeName) {
-        warn(`route path: ${path} not found.`);
-      }
       return {
         path,
         name: routeName || "",
@@ -39,9 +36,6 @@ export const useLayoutMenuData = (
 
     if (!path && name) {
       const routePath = globalRouteNamePathMapping[name];
-      if (!routePath) {
-        warn(`route name: ${name} not found.`);
-      }
       return {
         path: routePath || "",
         name,
@@ -59,21 +53,25 @@ export const useLayoutMenuData = (
     menuData: LayoutMenuItem,
     parent?: LayoutMenuItemVO,
   ): LayoutMenuItemVO => {
+    const isExternal = menuData.path ? isUrl(menuData.path) : false;
     const currentPath = menuData.path
       ? menuData.path.startsWith("/")
+        ? menuData.path
+        : isExternal
         ? menuData.path
         : `${parent?.path || ""}/${menuData.path}`
       : "";
 
     const { path, name } = getRoutePathAndName(cleanPath(currentPath), menuData.name);
     const parentPathStack = parent?.pathStack || [];
-    const menu = {
+    const menu: LayoutMenuItemVO = {
       title: menuData.title,
       path,
       pathStack: [...parentPathStack, path],
       name,
       icon: menuData.icon || "",
       children: [] as LayoutMenuItemVO[],
+      isExternal,
     };
     menu.children = Array.isArray(menuData.children)
       ? menuData.children.map((child) => {
