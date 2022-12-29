@@ -82,6 +82,10 @@ const TOTAL_MENUS = defineLayoutConfig([
     path: "/page/page6",
     icon: "iconfont c-mobile",
   },
+  {
+    title: "Github",
+    path: "https://github.com",
+  },
 ]);
 
 export default defineComponent({
