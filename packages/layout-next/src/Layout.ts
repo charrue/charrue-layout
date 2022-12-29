@@ -77,20 +77,6 @@ const Layout = defineComponent({
       return innerCollapse.value ? props.sidebarWidth[0] : props.sidebarWidth[1];
     });
 
-    const mainWidthStyle = computed(() => {
-      return `calc(100% - ${collapseWidth.value}px - var(--cl-content-gap-x))`;
-    });
-
-    const headerWidthStyle = computed(() => {
-      if (props.layout === "mix" || props.data?.length === 0) {
-        return "100%";
-      }
-      if (props.fixedHeader) {
-        return `calc(100% - ${collapseWidth.value}px)`;
-      }
-      return "100%";
-    });
-
     const rootClassName = computed(() => {
       return [
         "charrue-layout",
@@ -98,14 +84,31 @@ const Layout = defineComponent({
         props.layout === "mix" ? "charrue-layout--mix" : "charrue-layout--side",
       ];
     });
+    const rootStyles = computed(() => {
+      return {
+        "--cl-sidebar-collapsed-width": `${props.sidebarWidth[0]}px`,
+        "--cl-sidebar-opened-width": `${props.sidebarWidth[1]}px`,
+        "--cl-sidebar-active-width": `${collapseWidth.value}px`,
+      };
+    });
+
+    const headerWidthStyle = computed(() => {
+      if (props.layout === "mix" || props.data?.length === 0) {
+        return "100%";
+      }
+      if (props.fixedHeader) {
+        return `calc(100% - var(--cl-sidebar-active-width))`;
+      }
+      return "100%";
+    });
 
     return {
       innerCollapse,
       collapseWidth,
       onCollapsedChange,
-      mainWidthStyle,
       headerWidthStyle,
       rootClassName,
+      rootStyles,
     };
   },
   render() {
@@ -113,6 +116,7 @@ const Layout = defineComponent({
       "div",
       {
         class: this.rootClassName,
+        style: this.rootStyles,
       },
       [
         this.data &&
@@ -138,9 +142,6 @@ const Layout = defineComponent({
           "div",
           {
             class: "cl-content-root",
-            style: {
-              width: this.mainWidthStyle,
-            },
           },
           [
             h(
