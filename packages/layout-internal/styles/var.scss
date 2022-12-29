@@ -14,6 +14,8 @@
   --cl-sidebar-bg: var(--el-menu-bg-color, transparent);
   --cl-sidebar-border-color: transparent;
   --cl-sidebar-text-color: var(--el-menu-text-color, #E5EAF3);
+  --cl-sidebar-collapsed-width: 54px;
+  --cl-sidebar-opened-width: 200px;
 
   --cl-sidebar-hover-text-color: var(--cl-sidebar-text-color);
   --cl-sidebar-hover-bg: var(--el-menu-hover-bg-color, #18222c);

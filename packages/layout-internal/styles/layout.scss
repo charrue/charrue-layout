@@ -19,6 +19,14 @@
 }
 
 .charrue-layout--mix {
+  .cl-logo-container {
+    padding: 0;
+  }
+
+  .cl-collapse-trigger {
+    margin-left: 20px;
+  }
+
   .cl-sidebar-body {
     margin-top: var(--cl-header-height);
   }
@@ -61,6 +69,7 @@
   }
   h1 {
     color: var(--cl-title-color);
+    height: var(--cl-header-height);
     display: inline-block;
     vertical-align: middle;
     font-size: var(--cl-title-font-size);

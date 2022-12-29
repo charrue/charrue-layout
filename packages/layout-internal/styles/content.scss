@@ -8,11 +8,13 @@
   box-sizing: border-box;
   min-height: 100%;
   transition: all var(--cl-transition-duration);
+  width: calc(100% - var(--cl-sidebar-active-width) - var(--cl-content-gap-x));
 
   .cl-content__body {
-    margin-top: 0;
+    height: 100%;
     display: flex;
     flex-direction: column;
+    margin-top: 0;
   }
 
   .cl-content__left,
