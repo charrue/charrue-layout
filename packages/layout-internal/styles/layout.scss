@@ -36,6 +36,12 @@
   }
 }
 
+.charrue-layout--no-sidebar {
+  .cl-content-root {
+    width: 100%;
+  }
+}
+
 .cl-logo-container {
   position: relative;
   height: var(--cl-header-height);

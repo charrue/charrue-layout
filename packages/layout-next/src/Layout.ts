@@ -84,13 +84,14 @@ const Layout = defineComponent({
         "charrue-layout",
         innerCollapse.value ? "charrue-layout--collapse" : "charrue-layout--opened",
         props.layout === "mix" ? "charrue-layout--mix" : "charrue-layout--side",
+        hasSidebar.value ? "" : "charrue-layout--no-sidebar",
       ];
     });
     const rootStyles = computed(() => {
       return {
-        "--cl-sidebar-collapsed-width": hasSidebar.value ? `${props.sidebarWidth[0]}px` : 0,
-        "--cl-sidebar-opened-width": hasSidebar.value ? `${props.sidebarWidth[1]}px` : "100%",
-        "--cl-sidebar-active-width": hasSidebar.value ? `${collapseWidth.value}px` : "100%",
+        "--cl-sidebar-collapsed-width": `${props.sidebarWidth[0]}px`,
+        "--cl-sidebar-opened-width": `${props.sidebarWidth[1]}px`,
+        "--cl-sidebar-active-width": `${collapseWidth.value}px`,
       };
     });
 
