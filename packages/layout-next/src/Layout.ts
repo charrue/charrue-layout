@@ -68,6 +68,8 @@ const Layout = defineComponent({
         innerCollapse.value = props.collapse;
       },
     );
+    const hasSidebar = computed(() => props.data?.length > 0);
+
     const onCollapsedChange = (val: boolean) => {
       innerCollapse.value = val;
       emit("update:collapse", innerCollapse.value);
@@ -86,14 +88,14 @@ const Layout = defineComponent({
     });
     const rootStyles = computed(() => {
       return {
-        "--cl-sidebar-collapsed-width": `${props.sidebarWidth[0]}px`,
-        "--cl-sidebar-opened-width": `${props.sidebarWidth[1]}px`,
-        "--cl-sidebar-active-width": `${collapseWidth.value}px`,
+        "--cl-sidebar-collapsed-width": hasSidebar.value ? `${props.sidebarWidth[0]}px` : 0,
+        "--cl-sidebar-opened-width": hasSidebar.value ? `${props.sidebarWidth[1]}px` : "100%",
+        "--cl-sidebar-active-width": hasSidebar.value ? `${collapseWidth.value}px` : "100%",
       };
     });
 
     const headerWidthStyle = computed(() => {
-      if (props.layout === "mix" || props.data?.length === 0) {
+      if (props.layout === "mix" || !hasSidebar.value) {
         return "100%";
       }
       if (props.fixedHeader) {
