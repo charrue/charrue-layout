@@ -14,17 +14,29 @@
     "directory": "packages/layout-next"
   },
   "license": "MIT",
-  "main": "dist/index.js",
-  "unpkg": "dist/index.global.js",
-  "module": "dist/index.mjs",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./*": "./*"
+  },
+  "main": "dist/index.cjs",
+  "jsdelivr": "dist/index.full.js",
+  "unpkg": "dist/index.full.js",
+  "module": "dist/index.js",
   "typings": "dist/index.d.ts",
+  "style": "index.css",
   "files": [
     "dist",
+    "index.css",
     "README.md"
   ],
   "scripts": {
     "build": "tsup && npm run build:full",
-    "build:full": "tsup --config=tsup.full.config.ts"
+    "build:full": "rollup -c"
   },
   "dependencies": {
     "element-plus": "^2.2.18",
@@ -32,7 +44,14 @@
     "vue": "^3.2.41",
     "vue-router": "^4.1.6"
   },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^24.0.1",
+    "@rollup/plugin-node-resolve": "^15.0.1",
+    "rollup": "^3.13.0",
+    "rollup-plugin-esbuild": "^5.0.0"
+  },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
   }
 }

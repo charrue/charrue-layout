@@ -37,7 +37,14 @@ export const Logo = defineComponent({
                   h("img", {
                     src: this.logo,
                   }),
-                this.title && h("h1", {}, this.title),
+                this.title &&
+                  h(
+                    "h1",
+                    {
+                      style: this.logo ? "" : "margin-left: 0;",
+                    },
+                    this.title,
+                  ),
               ],
             },
           ),
